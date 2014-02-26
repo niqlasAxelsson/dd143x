@@ -2,20 +2,19 @@ package dd143x;
 
 public class Game {
 
-	public Game() {
-	}
+	
 
-	public static int playGame() {
+	public static void playGame() {
 
 		ScoreCard scoreCard = new ScoreCard();
-		Hand hand = new Hand();
+		Hand hand;
 		
 		while (!scoreCard.isCardFilled()){
-			
+			hand = new Hand();
+			//AI anrop
+			Main.printer.writeInt(scoreCard.finalScore());
 		}
-		
-		
-		return scoreCard.finalScore();
+	
 	}
 
 }

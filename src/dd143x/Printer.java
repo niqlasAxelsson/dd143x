@@ -9,14 +9,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class Print {
+@SuppressWarnings("unused")
+public class Printer {
 	
 		private String url = "scoreOutput.txt";
 		private File outputFile;
 		private FileWriter outStream;
 		private BufferedWriter writer;
 		
-		public Print(){
+		public Printer(){
 			outputFile = new File(url);
 			try {
 				outputFile.createNewFile();
