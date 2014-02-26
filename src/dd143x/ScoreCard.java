@@ -41,6 +41,11 @@ public class ScoreCard {
 		return sum;
 	}    
 	
+	public boolean isCardFilled(){
+		return getEmptyIndexes().isEmpty();
+	}
+	
+	
 	public LinkedList<Integer> getEmptyIndexes(){
 		LinkedList<Integer> emptyIndexes = new LinkedList<Integer>();
 		for(Integer i = 0; i < scoreValues.length ; i++){
