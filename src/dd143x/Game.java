@@ -12,8 +12,8 @@ public class Game {
 		while (!scoreCard.isCardFilled()){
 			hand = new Hand();
 			//AI anrop
-			Main.printer.writeInt(scoreCard.finalScore());
 		}
+		Main.printer.writeInt(scoreCard.finalScore());
 	
 	}
 
