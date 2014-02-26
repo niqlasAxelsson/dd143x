@@ -39,7 +39,7 @@ public class ScoreCard {
 			}
 		}
 		return sum;
-	}
+	}    
 	
 	public LinkedList<Integer> getEmptyIndexes(){
 		LinkedList<Integer> emptyIndexes = new LinkedList<Integer>();
