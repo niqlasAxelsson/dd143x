@@ -1,17 +1,18 @@
 package dd143x;
 
 public class Game {
-	
-	public int Game(){
+
+	public Game() {
+	}
+
+	public static int playGame() {
+
 		ScoreCard scoreCard = new ScoreCard();
+		Hand hand = new Hand();
 		
-		
-		
-		
-		
-		
-		
-		
+		while (!scoreCard.isCardFilled()){
+			
+		}
 		
 		
 		return scoreCard.finalScore();
