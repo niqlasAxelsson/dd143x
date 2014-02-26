@@ -46,10 +46,9 @@ public class ScoreCard {
 		for(Integer i = 0; i < scoreValues.length ; i++){
 			if (scoreValues[i] == 0 ){
 				emptyIndexes.add(i);
-				
 			}
 		}
-		
 		return emptyIndexes;
 	}
+
 }
