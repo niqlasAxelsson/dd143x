@@ -42,7 +42,7 @@ public class ScoreCard {
 	}
 	
 	public LinkedList<Integer> getEmptyIndexes(){
-		LinkedList emptyIndexes = new LinkedList<Integer>();
+		LinkedList<Integer> emptyIndexes = new LinkedList<Integer>();
 		for(Integer i = 0; i < scoreValues.length ; i++){
 			if (scoreValues[i] == 0 ){
 				emptyIndexes.add(i);
