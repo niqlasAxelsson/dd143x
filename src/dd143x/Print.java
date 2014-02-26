@@ -40,6 +40,12 @@ public class Print {
 		
 		public void close(){
 			try {
+				writer.write("\n");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
 				outStream.close();
 				writer.close();
 
