@@ -26,6 +26,11 @@ public class ScoreCard {
 	
 	public ScoreCard() {
 		
+		//initerar scoreValues till -1 av praktiska skäl
+		for(int i = 0; i < scoreValues.length; i ++){
+			scoreValues[i] = -1;
+		}
+		
 	}
 	
 	public int finalScore() {
@@ -41,10 +46,16 @@ public class ScoreCard {
 		return sum;
 	}
 	
+	
+	public boolean isCardFilled(){
+		LinkedList<Integer> list = getEmptyIndexes();
+		return list.isEmpty();
+	}
+	
 	public LinkedList<Integer> getEmptyIndexes(){
 		LinkedList<Integer> emptyIndexes = new LinkedList<Integer>();
 		for(Integer i = 0; i < scoreValues.length ; i++){
-			if (scoreValues[i] == 0 ){
+			if (scoreValues[i] == -1 ){
 				emptyIndexes.add(i);
 			}
 		}
