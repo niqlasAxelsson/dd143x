@@ -8,10 +8,12 @@ public class Game {
 
 		ScoreCard scoreCard = new ScoreCard();
 		Hand hand;
-		
+		int roundCounter = 1;
 		while (!scoreCard.isCardFilled()){
+	
 			hand = new Hand();
-			//AI anrop
+			AI.ai(scoreCard, hand);
+			roundCounter ++;
 		}
 		Main.printer.writeInt(scoreCard.finalScore());
 	

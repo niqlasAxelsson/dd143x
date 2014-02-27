@@ -25,6 +25,9 @@ public class ScoreCard {
 	public int[] scoreValues = new int[15]; 
 	
 	public ScoreCard() {
+		for (int i = 0; i < scoreValues.length; i++){
+			scoreValues[i] = -1;
+		}
 		
 	}
 	
@@ -49,7 +52,7 @@ public class ScoreCard {
 	public LinkedList<Integer> getEmptyIndexes(){
 		LinkedList<Integer> emptyIndexes = new LinkedList<Integer>();
 		for(Integer i = 0; i < scoreValues.length ; i++){
-			if (scoreValues[i] == 0 ){
+			if (scoreValues[i] == -1 ){
 				emptyIndexes.add(i);
 			}
 		}

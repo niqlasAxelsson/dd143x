@@ -9,6 +9,7 @@ public class Dice {
 	
 	public Dice() {
 		random = new Random();
+		throwDice();
 	}
 	
 	public int getValue() {

@@ -7,15 +7,17 @@ public class Main {
 	
 	
 	
-	public Main(String[] args) {
+	public static void main(String[] args) {
 		printer = new Printer();
 		if (args.length == 0 ){
 			throw new IllegalArgumentException("No Input");
 		}
 		int nrGames = Integer.parseInt(args[0]);
 		for (int gameCounter = 1 ; gameCounter <= nrGames ; gameCounter ++){
+			System.out.println("Gamecounter: "+ gameCounter);
 			Game.playGame();
 		}
+		printer.close();
 		
 		
 	}
