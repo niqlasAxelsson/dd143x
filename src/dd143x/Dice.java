@@ -12,6 +12,7 @@ public class Dice {
 		throwDice();
 	}
 	
+	
 	public int getValue() {
 		return value;
 	}

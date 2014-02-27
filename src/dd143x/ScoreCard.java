@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 public class ScoreCard {
 
-	public static final int ones = 0;
+public static final int ones = 0;
 	public static final int twos = 1;
 	public static final int threes = 2;
 	public static final int fours = 3;

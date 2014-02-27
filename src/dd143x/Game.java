@@ -8,12 +8,11 @@ public class Game {
 
 		ScoreCard scoreCard = new ScoreCard();
 		Hand hand;
-		int roundCounter = 1;
+		//int roundCounter = 1;
 		while (!scoreCard.isCardFilled()){
-	
 			hand = new Hand();
 			AI.ai(scoreCard, hand);
-			roundCounter ++;
+			//roundCounter ++;
 		}
 		Main.printer.writeInt(scoreCard.finalScore());
 	
