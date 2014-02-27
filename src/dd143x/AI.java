@@ -25,7 +25,8 @@ public class AI {
 		int[] scoreScore = new int[15];
 		evalScores(diceValues, scoreScore);
 
-		//scoreCard.scoreValues[firstIndex] = score; //TODO metoden ger indexOutOfBoundsExeption
+		// scoreCard.scoreValues[firstIndex] = score; //TODO metoden ger
+		// indexOutOfBoundsExeption
 	}
 
 	private static void evalScores(int[] diceValues, int[] scoreScore) {
@@ -54,7 +55,7 @@ public class AI {
 		return score;
 	}
 
-	//alla 6:or är för att det finns 6 olika värden på tärningar.
+	// alla 6:or är för att det finns 6 olika värden på tärningar.
 	private static int[] pairScore(int[] dices) {
 		int[] valueTimes = new int[6];
 		int[] scores = new int[6];
@@ -65,6 +66,12 @@ public class AI {
 
 		// räknar de olika valörerna
 		countValues(dices, valueTimes);
+		//
+		// System.out.println("NrCount");
+		// for (int v : valueTimes){
+		// System.out.println(v);
+		// }
+		// System.out.println();
 
 		// beäkna poängen för de olika paren,
 		// måste vara par
@@ -86,16 +93,16 @@ public class AI {
 	}
 
 	private static void countValues(int[] dices, int[] valueTimes) {
-		for (int j : dices){
-			System.out.println(j);
-		}
-		
+		// for (int j : dices){
+		// System.out.println(j);
+		// }
+
 		for (int i : dices) {
-			//try{
+			// try{
 			valueTimes[i - 1]++;
-//			}catch(IndexOutOfBoundsException e){
-//				System.out.println("Index Error"+i);
-//			}
+			// }catch(IndexOutOfBoundsException e){
+			// System.out.println("Index Error"+i);
+			// }
 		}
 	}
 
@@ -103,32 +110,29 @@ public class AI {
 		int returning = 0;
 		int[] firstPairScore = pairScore(dices);
 		int valueFirstPair = firstPairScore[0];
-		if (valueFirstPair == 0){
+		int diceToRemove = firstPairScore[1];
+		if (valueFirstPair == 0) {
 			return returning;
 		}
 
-		for(int p : firstPairScore){
-			System.out.println("Score "+ p);
-		}
-		
-		//sortera ut de tärningar som används i första paret
-		//TODO fel här
 		int[] remainingDices = new int[3];
 		int tempCounter = 0;
-		for (int i = 0; i < 5; i++ ){
-			if(dices[i] != valueFirstPair){
+		for (int i = 0; i < 5; i++) {
+			if (dices[i] != diceToRemove) {
 				remainingDices[tempCounter] = dices[i];
+				// System.out.println(dices[i] + "  " + tempCounter);
+				tempCounter++;
 			}
 		}
-		
+
 		int[] secondpair = pairScore(remainingDices);
-		
-		//vi har inte tvåpar
-		if(secondpair[0] == 0){
+
+		// vi har inte tvåpar
+		if (secondpair[0] == 0) {
 			return returning;
 		}
-		
-		returning = firstPairScore[0]+secondpair[0];
+
+		returning = firstPairScore[0] + secondpair[0];
 		return returning;
 	}
 
