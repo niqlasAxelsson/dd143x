@@ -22,11 +22,10 @@ public class Printer {
 		
 		public Printer(){
 			dateTime = new SimpleDateFormat("yyyyMMdd_HHmm").format(Calendar.getInstance().getTime());
-			outputFile = new File(url+dateTime+".txt");
+			outputFile = new File(url+".txt"); //TODO ad in date/time
 			try {
 				outputFile.createNewFile();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
@@ -35,10 +34,8 @@ public class Printer {
 				outStream = new FileWriter(outputFile);
 				writer = new BufferedWriter(outStream);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -47,7 +44,6 @@ public class Printer {
 			try {
 				writer.write("\n");
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			try {
@@ -55,16 +51,14 @@ public class Printer {
 				outStream.close();
 
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		
 		public void writeInt(int input){
 			try {
-				writer.write(input + "; ");
+				writer.write(input + ";\n");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

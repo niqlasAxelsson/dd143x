@@ -3,6 +3,8 @@ package dd143x;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import javax.script.ScriptContext;
+
 public class AI {
 
 	public static void ai(ScoreCard scoreCard, Hand hand) {
@@ -39,7 +41,7 @@ public class AI {
 
 		scoreScore[ScoreCard.pair] = pairScore(diceValues)[0];
 		scoreScore[ScoreCard.twoPair] = doublePairScore(diceValues);
-
+		scoreScore[ScoreCard.threeOfAKind] = checkTripleScore(diceValues);
 	}
 
 	// beräkna poäng för #of a kind. summerar poängen för de antal tärningar som
@@ -135,5 +137,34 @@ public class AI {
 		returning = firstPairScore[0] + secondpair[0];
 		return returning;
 	}
-
+	
+	private static int checkTripleScore(int[] dices){
+		int trippleDice = 1;
+		int[] valueTimes = new int[6];
+		countValues(dices, valueTimes);
+		for (int i : valueTimes){
+			if (i == 3){ //we have three of this dice, dice points indicated by trippleDice
+				return trippleDice*3;
+			}
+			trippleDice ++;
+		}
+		
+		return 0;
+	}
+	
+	private static int checkQuadruopleScore(int[] dices){
+		int trippleDice = 1;
+		int[] valueTimes = new int[6];
+		countValues(dices, valueTimes);
+		for (int i : valueTimes){
+			if (i == 4){ //we have three of this dice, dice points indicated by trippleDice
+				return trippleDice*4;
+			}
+			trippleDice ++;
+		}
+		
+		return 0;
+	}
+	
+	
 }
