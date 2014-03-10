@@ -8,7 +8,7 @@ import javax.script.ScriptContext;
 public class AI {
 
 	final static private int diceMaxValue = 6;
-	
+
 	public static void ai(ScoreCard scoreCard, Hand hand) {
 		LinkedList<Integer> emptyIndex = scoreCard.getEmptyIndexes();
 		int firstIndex = emptyIndex.poll();
@@ -46,7 +46,8 @@ public class AI {
 		scoreScore[ScoreCard.threeOfAKind] = checkTripleScore(diceValues);
 	}
 
-	// beräkna poäng för #of a kind. summerar poängen för de antal tärningar som
+	// beräkna poäng för #of a kind. summerar poängen för de antal
+	// tärningar som
 	// har
 	// värdet number
 	private static int numberScore(int[] dices, int number) {
@@ -97,102 +98,146 @@ public class AI {
 	}
 
 	private static void countValues(int[] dices, int[] valueTimes) {
-		
-		
+
 		for (int i : dices) {
-			//simply add 1 to the corresponding place in the answer array
+			// simply add 1 to the corresponding place in the answer array
 			valueTimes[i - 1]++;
 		}
 	}
 
 	private static int doublePairScore(int[] dices) {
 		int returning = 0;
-		
+
 		int[] valueTimes = new int[diceMaxValue];
 		countValues(dices, valueTimes);
 		boolean firstPair = false;
-		
+
 		int eyeCounter = 1;
 		int firstPairEyes = 0;
-		
-		for (int i : valueTimes){
-			if (i ==2 && !firstPair){
+
+		for (int i : valueTimes) {
+			if (i == 2 && !firstPair) {
 				firstPairEyes = eyeCounter;
 				firstPair = true; // we have found our first pair
-			}else if(i == 2 && firstPair){
-				return firstPairEyes*2 + eyeCounter*2;
+			} else if (i == 2 && firstPair) {
+				return firstPairEyes * 2 + eyeCounter * 2;
 			}
-			eyeCounter ++;
+			eyeCounter++;
 		}
 
-		//if not 2 pair return 0
+		// if not 2 pair return 0
 		return returning;
 	}
-	
-	private static int checkTripleScore(int[] dices){
+
+	private static int checkTripleScore(int[] dices) {
 		int trippleDice = 1;
 		int[] valueTimes = new int[6];
 		countValues(dices, valueTimes);
-		for (int i : valueTimes){
-			if (i == 3){ //we have three of this dice, dice points indicated by trippleDice
-				return trippleDice*3;
+		for (int i : valueTimes) {
+			if (i == 3) { // we have three of this dice, dice points indicated
+							// by trippleDice
+				return trippleDice * 3;
 			}
-			trippleDice ++;
+			trippleDice++;
 		}
-		
+
 		return 0;
 	}
-	
-	private static int checkQuadruopleScore(int[] dices){
+
+	private static int checkQuadruopleScore(int[] dices) {
 		int trippleDice = 1;
 		int[] valueTimes = new int[6];
 		countValues(dices, valueTimes);
-		for (int i : valueTimes){
-			if (i == 4){ //we have three of this dice, dice points indicated by trippleDice
-				return trippleDice*4;
+		for (int i : valueTimes) {
+			if (i == 4) { // we have three of this dice, dice points indicated
+							// by trippleDice
+				return trippleDice * 4;
 			}
-			trippleDice ++;
+			trippleDice++;
 		}
-		
+
 		return 0;
 	}
-	
-	
-	private static int smallStraightScore(int[] hand){
+
+	private static int smallStraightScore(int[] hand) {
 		int returning = 0;
 		boolean smallStraightTrue = true;
-		for (int i =0; i < 5 ; i++){
-			if (i != i+1 ){
-				//This will only be false iff we dont have a small straight
-				//since dice i should have i as score, 1 index as is custom with board  games
+		for (int i = 0; i < 5; i++) {
+			if (i != i + 1) {
+				// This will only be false iff we dont have a small straight
+				// since dice i should have i as score, 1 index as is custom
+				// with board games
 				smallStraightTrue = false;
 			}
 		}
 
-		if (smallStraightTrue){
+		if (smallStraightTrue) {
 			returning = 15;
 		}
-		
+
 		return returning;
 	}
-	
-	
-	private static int bigStraightScore(int[] hand){
+
+	private static int bigStraightScore(int[] hand) {
 		int returning = 0;
 		boolean smallStraightTrue = true;
-		for (int i =0; i < 5 ; i++){
-			if (i != i+2 ){
-				//This will only be false iff we dont have a small straight
-				//since dice i should have i as score, 1 index as is custom with board  games
+		for (int i = 0; i < 5; i++) {
+			if (i != i + 2) {
+				// This will only be false iff we dont have a small straight
+				// since dice i should have i as score, 1 index as is custom
+				// with board games
 				smallStraightTrue = false;
 			}
 		}
 
-		if (smallStraightTrue){
+		if (smallStraightTrue) {
 			returning = 20;
 		}
+
+		return returning;
+	}
+
+	
+	private static int fullHouseScore(int[] hand){
+		int returning = 0;
+		int pairEyes = 0;
+		int trippleEyes = 0;
+		for (int i = 0; i < hand.length ; i ++){
+			if (hand[i] == 2){
+				pairEyes = i+1;
+			}
+			if (hand[i] == 3){
+				trippleEyes = i+1;
+			}
+		}
+		
+		if (pairEyes != 0 && trippleEyes !=0){
+			returning = pairEyes*2 + trippleEyes*3;
+		}
+		
 		
 		return returning;
+	}
+	
+	private static int chansScore(int[] hand) {
+		int sum = 0;
+		
+		for (int i : hand){
+			sum += i;
+		}
+		return sum;
+	}
+
+	private static int yatzyScore(int[] hand){
+
+		int[] evaluated = new int[diceMaxValue];
+		evalScores(hand, evaluated);
+		for (int i : evaluated){
+			if (i ==5){
+				return 50;
+			}
+		}
+		return 0;
 	}
 	
 }
