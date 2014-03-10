@@ -7,6 +7,8 @@ import javax.script.ScriptContext;
 
 public class AI {
 
+	final static private int diceMaxValue = 6;
+	
 	public static void ai(ScoreCard scoreCard, Hand hand) {
 		LinkedList<Integer> emptyIndex = scoreCard.getEmptyIndexes();
 		int firstIndex = emptyIndex.poll();
@@ -34,7 +36,7 @@ public class AI {
 	private static void evalScores(int[] diceValues, int[] scoreScore) {
 
 		// poäng för lika värden.
-		for (int i = 1; i <= 6; i++) {
+		for (int i = 1; i <= diceMaxValue; i++) {
 			int score = numberScore(diceValues, i);
 			scoreScore[i - 1] = score;
 		}
@@ -59,8 +61,8 @@ public class AI {
 
 	// alla 6:or är för att det finns 6 olika värden på tärningar.
 	private static int[] pairScore(int[] dices) {
-		int[] valueTimes = new int[6];
-		int[] scores = new int[6];
+		int[] valueTimes = new int[diceMaxValue];
+		int[] scores = new int[diceMaxValue];
 
 		// [0] håller poängen
 		// [1] håller vilken valör det var som gav poängen
@@ -77,14 +79,14 @@ public class AI {
 
 		// beäkna poängen för de olika paren,
 		// måste vara par
-		for (int j = 0; j < 6; j++) {
+		for (int j = 0; j < diceMaxValue; j++) {
 			if (valueTimes[j] == 2) {
 				scores[j] = (j + 1) * 2;
 			}
 		}
 
 		// beräkna vilken poäng som är störst.
-		for (int k = 0; k < 6; k++) {
+		for (int k = 0; k < diceMaxValue; k++) {
 			if (scores[k] >= returning[0]) {
 				returning[0] = scores[k];
 				returning[1] = k + 1;
@@ -110,31 +112,34 @@ public class AI {
 
 	private static int doublePairScore(int[] dices) {
 		int returning = 0;
-		int[] firstPairScore = pairScore(dices);
-		int valueFirstPair = firstPairScore[0];
-		int diceToRemove = firstPairScore[1];
-		if (valueFirstPair == 0) {
-			return returning;
-		}
-
-		int[] remainingDices = new int[3];
-		int tempCounter = 0;
-		for (int i = 0; i < 5; i++) {
-			if (dices[i] != diceToRemove) {
-				remainingDices[tempCounter] = dices[i];
-				// System.out.println(dices[i] + "  " + tempCounter);
-				tempCounter++;
-			}
-		}
-
-		int[] secondpair = pairScore(remainingDices);
-
-		// vi har inte tvåpar
-		if (secondpair[0] == 0) {
-			return returning;
-		}
-
-		returning = firstPairScore[0] + secondpair[0];
+		int[] valueTimes = new int[6]
+		
+		
+//		int[] firstPairScore = pairScore(dices);
+//		int valueFirstPair = firstPairScore[0];
+//		int diceToRemove = firstPairScore[1];
+//		if (valueFirstPair == 0) {
+//			return returning;
+//		}
+//
+//		int[] remainingDices = new int[3];
+//		int tempCounter = 0;
+//		for (int i = 0; i < 5; i++) {
+//			if (dices[i] != diceToRemove) {
+//				remainingDices[tempCounter] = dices[i];
+//				// System.out.println(dices[i] + "  " + tempCounter);
+//				tempCounter++;
+//			}
+//		}
+//
+//		int[] secondpair = pairScore(remainingDices);
+//
+//		// vi har inte tvåpar
+//		if (secondpair[0] == 0) {
+//			return returning;
+//		}
+//
+//		returning = firstPairScore[0] + secondpair[0];
 		return returning;
 	}
 	
