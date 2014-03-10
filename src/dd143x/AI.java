@@ -97,63 +97,35 @@ public class AI {
 	}
 
 	private static void countValues(int[] dices, int[] valueTimes) {
-		// for (int j : dices){
-		// System.out.println(j);
-		// }
-
+		
+		
 		for (int i : dices) {
-			// try{
+			//simply add 1 to the corresponding place in the answer array
 			valueTimes[i - 1]++;
-			// }catch(IndexOutOfBoundsException e){
-			// System.out.println("Index Error"+i);
-			// }
 		}
 	}
 
 	private static int doublePairScore(int[] dices) {
 		int returning = 0;
+		
 		int[] valueTimes = new int[diceMaxValue];
 		countValues(dices, valueTimes);
 		boolean firstPair = false;
-		int firstPairEyes = 0;
+		
 		int eyeCounter = 1;
+		int firstPairEyes = 0;
 		
 		for (int i : valueTimes){
 			if (i ==2 && !firstPair){
 				firstPairEyes = eyeCounter;
-				firstPair = true;
+				firstPair = true; // we have found our first pair
 			}else if(i == 2 && firstPair){
 				return firstPairEyes*2 + eyeCounter*2;
 			}
 			eyeCounter ++;
 		}
-		
-		
-//		int[] firstPairScore = pairScore(dices);
-//		int valueFirstPair = firstPairScore[0];
-//		int diceToRemove = firstPairScore[1];
-//		if (valueFirstPair == 0) {
-//			return returning;
-//		}
-//
-//		int[] remainingDices = new int[3];
-//		int tempCounter = 0;
-//		for (int i = 0; i < 5; i++) {
-//			if (dices[i] != diceToRemove) {
-//				remainingDices[tempCounter] = dices[i];
-//				// System.out.println(dices[i] + "  " + tempCounter);
-//				tempCounter++;
-//			}
-//		}
-//
-//		int[] secondpair = pairScore(remainingDices);
-//
-//		// vi har inte tvåpar
-//		if (secondpair[0] == 0) {
-//			return returning;
-//		}
-//
-//		returning = firstPairScore[0] + secondpair[0];
+
+		//if not 2 pair return 0
 		return returning;
 	}
 	
@@ -185,5 +157,42 @@ public class AI {
 		return 0;
 	}
 	
+	
+	private static int smallStraightScore(int[] hand){
+		int returning = 0;
+		boolean smallStraightTrue = true;
+		for (int i =0; i < 5 ; i++){
+			if (i != i+1 ){
+				//This will only be false iff we dont have a small straight
+				//since dice i should have i as score, 1 index as is custom with board  games
+				smallStraightTrue = false;
+			}
+		}
+
+		if (smallStraightTrue){
+			returning = 15;
+		}
+		
+		return returning;
+	}
+	
+	
+	private static int bigStraightScore(int[] hand){
+		int returning = 0;
+		boolean smallStraightTrue = true;
+		for (int i =0; i < 5 ; i++){
+			if (i != i+2 ){
+				//This will only be false iff we dont have a small straight
+				//since dice i should have i as score, 1 index as is custom with board  games
+				smallStraightTrue = false;
+			}
+		}
+
+		if (smallStraightTrue){
+			returning = 20;
+		}
+		
+		return returning;
+	}
 	
 }
