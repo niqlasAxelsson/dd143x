@@ -112,7 +112,21 @@ public class AI {
 
 	private static int doublePairScore(int[] dices) {
 		int returning = 0;
-		int[] valueTimes = new int[6]
+		int[] valueTimes = new int[diceMaxValue];
+		countValues(dices, valueTimes);
+		boolean firstPair = false;
+		int firstPairEyes = 0;
+		int eyeCounter = 1;
+		
+		for (int i : valueTimes){
+			if (i ==2 && !firstPair){
+				firstPairEyes = eyeCounter;
+				firstPair = true;
+			}else if(i == 2 && firstPair){
+				return firstPairEyes*2 + eyeCounter*2;
+			}
+			eyeCounter ++;
+		}
 		
 		
 //		int[] firstPairScore = pairScore(dices);
