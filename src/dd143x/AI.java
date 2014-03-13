@@ -28,7 +28,21 @@ public class AI {
 		// set a score to the different scoreCard options
 		int[] scoreScore = new int[15];
 		evalScores(diceValues, scoreScore);
-
+		
+		int highestIndex = 0;
+		int highestScore = 0;
+		LinkedList<Integer> freeScores = scoreCard.getEmptyIndexes();
+		for (int i : freeScores){
+			if (scoreScore[i] > highestScore){
+				highestIndex = i;
+				highestScore = scoreScore[i];
+			}
+		}
+		if(highestScore == 0){
+			scoreCard.scoreValues[freeScores.peek()] = 0;
+		}else{
+		scoreCard.scoreValues[highestIndex] = highestScore;
+		}
 		// scoreCard.scoreValues[firstIndex] = score; //TODO metoden ger
 		// indexOutOfBoundsExeption
 	}
@@ -41,9 +55,15 @@ public class AI {
 			scoreScore[i - 1] = score;
 		}
 
-		scoreScore[ScoreCard.pair] = pairScore(diceValues)[0];
+		scoreScore[ScoreCard.pair] = pairScore(diceValues);
 		scoreScore[ScoreCard.twoPair] = doublePairScore(diceValues);
 		scoreScore[ScoreCard.threeOfAKind] = checkTripleScore(diceValues);
+		scoreScore[ScoreCard.fourOfAKind] = checkQuadruopleScore(diceValues);
+		scoreScore[ScoreCard.smallStraight] = smallStraightScore(scoreScore);
+		scoreScore[ScoreCard.largeStraight] = largeStraightScore(scoreScore);
+		scoreScore[ScoreCard.house] = fullHouseScore(scoreScore);
+		scoreScore[ScoreCard.chance] = chansScore(diceValues);
+		scoreScore[ScoreCard.yatzy] = yatzyScore(diceValues);
 	}
 
 	// beräkna poäng för #of a kind. summerar poängen för de antal
@@ -61,22 +81,17 @@ public class AI {
 	}
 
 	// alla 6:or är för att det finns 6 olika värden på tärningar.
-	private static int[] pairScore(int[] dices) {
+	private static int pairScore(int[] dices) {
 		int[] valueTimes = new int[diceMaxValue];
 		int[] scores = new int[diceMaxValue];
 
 		// [0] håller poängen
 		// [1] håller vilken valör det var som gav poängen
-		int[] returning = new int[2];
+		int returning = 0;
 
 		// räknar de olika valörerna
 		countValues(dices, valueTimes);
-		//
-		// System.out.println("NrCount");
-		// for (int v : valueTimes){
-		// System.out.println(v);
-		// }
-		// System.out.println();
+		
 
 		// beäkna poängen för de olika paren,
 		// måste vara par
@@ -88,9 +103,8 @@ public class AI {
 
 		// beräkna vilken poäng som är störst.
 		for (int k = 0; k < diceMaxValue; k++) {
-			if (scores[k] >= returning[0]) {
-				returning[0] = scores[k];
-				returning[1] = k + 1;
+			if (scores[k] >= returning) {
+				returning= scores[k];
 			}
 		}
 
@@ -178,7 +192,7 @@ public class AI {
 		return returning;
 	}
 
-	private static int bigStraightScore(int[] hand) {
+	private static int largeStraightScore(int[] hand) {
 		int returning = 0;
 		boolean smallStraightTrue = true;
 		for (int i = 0; i < 5; i++) {
@@ -231,7 +245,7 @@ public class AI {
 	private static int yatzyScore(int[] hand){
 
 		int[] evaluated = new int[diceMaxValue];
-		evalScores(hand, evaluated);
+		countValues(hand, evaluated);
 		for (int i : evaluated){
 			if (i ==5){
 				return 50;

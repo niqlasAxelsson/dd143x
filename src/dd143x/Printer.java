@@ -22,7 +22,7 @@ public class Printer {
 		
 		public Printer(){
 			dateTime = new SimpleDateFormat("yyyyMMdd_HHmm").format(Calendar.getInstance().getTime());
-			outputFile = new File(url+".txt"); //TODO ad in date/time
+			outputFile = new File(url+dateTime +".txt"); //TODO ad in date/time
 			try {
 				outputFile.createNewFile();
 			} catch (IOException e1) {
