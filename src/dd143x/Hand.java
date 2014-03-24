@@ -15,6 +15,18 @@ public class Hand {
 		return dices;
 	}
 	
+	public int[] getValueArray(){
+		int[] returning = new int[dices.length];
+
+		for (int i =0; i < dices.length; i ++){
+			returning[i] = dices[i].getValue();
+		}
+		
+		return returning;
+		
+	}
+	
+	
 	public void reThrow(int[] indexToThrow){
 		for (int i : indexToThrow){
 			dices[i].throwDice();

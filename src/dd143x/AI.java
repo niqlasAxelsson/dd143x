@@ -47,7 +47,7 @@ public class AI {
 		// indexOutOfBoundsExeption
 	}
 
-	private static void evalScores(int[] diceValues, int[] scoreScore) {
+	public static void evalScores(int[] diceValues, int[] scoreScore) {
 
 		// poäng för lika värden.
 		for (int i = 1; i <= diceMaxValue; i++) {
@@ -70,7 +70,7 @@ public class AI {
 	// tärningar som
 	// har
 	// värdet number
-	private static int numberScore(int[] dices, int number) {
+	public static int numberScore(int[] dices, int number) {
 		int score = 0;
 		for (int i : dices) {
 			if (i == number) {
@@ -81,7 +81,7 @@ public class AI {
 	}
 
 	// alla 6:or är för att det finns 6 olika värden på tärningar.
-	private static int pairScore(int[] dices) {
+	public static int pairScore(int[] dices) {
 		int[] valueTimes = new int[diceMaxValue];
 		int[] scores = new int[diceMaxValue];
 
@@ -111,7 +111,7 @@ public class AI {
 		return returning;
 	}
 
-	private static void countValues(int[] dices, int[] valueTimes) {
+	public static void countValues(int[] dices, int[] valueTimes) {
 
 		for (int i : dices) {
 			// simply add 1 to the corresponding place in the answer array
@@ -143,7 +143,7 @@ public class AI {
 		return returning;
 	}
 
-	private static int checkTripleScore(int[] dices) {
+	public static int checkTripleScore(int[] dices) {
 		int trippleDice = 1;
 		int[] valueTimes = new int[6];
 		countValues(dices, valueTimes);
@@ -158,7 +158,7 @@ public class AI {
 		return 0;
 	}
 
-	private static int checkQuadruopleScore(int[] dices) {
+	public static int checkQuadruopleScore(int[] dices) {
 		int trippleDice = 1;
 		int[] valueTimes = new int[6];
 		countValues(dices, valueTimes);
@@ -173,7 +173,7 @@ public class AI {
 		return 0;
 	}
 
-	private static int smallStraightScore(int[] hand) {
+	public static int smallStraightScore(int[] hand) {
 		int returning = 0;
 		boolean smallStraightTrue = true;
 		for (int i = 0; i < 5; i++) {
@@ -192,7 +192,7 @@ public class AI {
 		return returning;
 	}
 
-	private static int largeStraightScore(int[] hand) {
+	public static int largeStraightScore(int[] hand) {
 		int returning = 0;
 		boolean smallStraightTrue = true;
 		for (int i = 0; i < 5; i++) {
@@ -212,7 +212,7 @@ public class AI {
 	}
 
 	
-	private static int fullHouseScore(int[] hand){
+	public static int fullHouseScore(int[] hand){
 		int returning = 0;
 		int pairEyes = 0;
 		int trippleEyes = 0;
@@ -233,7 +233,7 @@ public class AI {
 		return returning;
 	}
 	
-	private static int chansScore(int[] hand) {
+	public static int chansScore(int[] hand) {
 		int sum = 0;
 		
 		for (int i : hand){
@@ -242,7 +242,7 @@ public class AI {
 		return sum;
 	}
 
-	private static int yatzyScore(int[] hand){
+	public static int yatzyScore(int[] hand){
 
 		int[] evaluated = new int[diceMaxValue];
 		countValues(hand, evaluated);
