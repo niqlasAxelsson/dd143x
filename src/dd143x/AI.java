@@ -7,12 +7,15 @@ import javax.script.ScriptContext;
 
 public class AI {
 
-	final static private int diceMaxValue = 6;
-
+	final static public int diceMaxValue = 6;
+//	final static private float[] weights1 = [];
+	
+	
+	
 	public static void ai(ScoreCard scoreCard, Hand hand) {
 		LinkedList<Integer> emptyIndex = scoreCard.getEmptyIndexes();
 		int firstIndex = emptyIndex.poll();
-		Dice[] dices = hand.getHand();
+		Dice[] dices = hand.getDices();
 		int score = 0;
 		int[] diceValues = new int[5];
 		int tempCounter = 0;
@@ -61,7 +64,7 @@ public class AI {
 		scoreScore[ScoreCard.fourOfAKind] = checkQuadruopleScore(diceValues);
 		scoreScore[ScoreCard.smallStraight] = smallStraightScore(scoreScore);
 		scoreScore[ScoreCard.largeStraight] = largeStraightScore(scoreScore);
-		scoreScore[ScoreCard.house] = fullHouseScore(scoreScore);
+		scoreScore[ScoreCard.fullHouse] = fullHouseScore(scoreScore);
 		scoreScore[ScoreCard.chance] = chansScore(diceValues);
 		scoreScore[ScoreCard.yatzy] = yatzyScore(diceValues);
 	}

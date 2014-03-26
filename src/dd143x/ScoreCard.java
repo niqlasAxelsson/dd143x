@@ -16,7 +16,7 @@ public static final int ones = 0;
 	public static final int fourOfAKind = 9;
 	public static final int smallStraight = 10;
 	public static final int largeStraight = 11;
-	public static final int house = 12;
+	public static final int fullHouse = 12;
 	public static final int chance = 13;
 	public static final int yatzy = 14;
 	

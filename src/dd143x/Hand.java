@@ -3,7 +3,7 @@ package dd143x;
 public class Hand {
 	
 	private Dice[] dices = new Dice[5];
-	
+	private int roll = 1;
 	
 	public Hand(){
 		for (int i = 0 ;i < 5; i ++ ){
@@ -11,8 +11,16 @@ public class Hand {
 		}
 	}
 	
-	public Dice[] getHand(){
+	public Dice[] getDices(){
 		return dices;
+	}
+	
+	public void throwed(){
+		roll ++;
+	}
+	
+	public int getRoll(){
+		return roll;
 	}
 	
 	public int[] getValueArray(){
@@ -31,6 +39,7 @@ public class Hand {
 		for (int i : indexToThrow){
 			dices[i].throwDice();
 		}
+		roll ++;
 	}
 	
 }

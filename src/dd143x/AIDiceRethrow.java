@@ -14,12 +14,13 @@ public class AIDiceRethrow {
 	 * @param hand
 	 * @param value
 	 */
-	public static void rehrowInt(Hand hand, int value){
-		for (Dice dice : hand.getHand()){
+	public static void allOfAKind(Hand hand, int value){
+		for (Dice dice : hand.getDices()){
 			if (dice.value != value){
 				dice.throwDice();
 			}
 		}
+		hand.throwed();
 	}
 	
 	/**
@@ -27,9 +28,9 @@ public class AIDiceRethrow {
 	 * @param hand
 	 * @param nrDices
 	 */
-	public static void rethrowNrDices(Hand hand, int nrDices){
+	public static void nrDices(Hand hand, int nrDices){
 		int[] countedDices = new int[6];
-		for (Dice dice: hand.getHand()){
+		for (Dice dice: hand.getDices()){
 			countedDices[dice.getValue()-1] ++;
 		}
 		
@@ -41,11 +42,12 @@ public class AIDiceRethrow {
 			}
 		}
 		
-		for (Dice dice : hand.getHand()){
+		for (Dice dice : hand.getDices()){
 			if (dice.value != valueToKeep){
 				dice.throwDice();
 			}
 		}
+		hand.throwed();
 	}
 	
 	
@@ -53,7 +55,7 @@ public class AIDiceRethrow {
 	 * requires a twoPair hand in to work correctly
 	 * @param hand
 	 */
-	public static void rethrowTwoPair(Hand hand){
+	public static void twoPair(Hand hand){
 		int[] countedDices = new int[6];
 		AI.countValues(hand.getValueArray(), countedDices);
 		int valueToRethrow = 1;
@@ -63,12 +65,13 @@ public class AIDiceRethrow {
 			}
 		}
 		
-		for (Dice dice: hand.getHand()){
+		for (Dice dice: hand.getDices()){
 			if (dice.value == valueToRethrow){
 				dice.throwDice();
 			}
 		}
 		
+		hand.throwed();
 	}
 	
 	
@@ -76,18 +79,85 @@ public class AIDiceRethrow {
 	 * rethrows every surplus copy of a dice value in order to get a straight
 	 * @param hand
 	 */
-	public static void rethrowStraight(Hand hand) {
+	public static void straight(Hand hand) {
 		boolean[] haveThisValue = {false, false, false, false, false, false};
-		for (Dice dice: hand.getHand()){
+		for (Dice dice: hand.getDices()){
 			if (haveThisValue[dice.getValue()-1]){
 				dice.throwDice();
 			}else{
 				haveThisValue[dice.getValue()-1] = true;
 			}
 		}
-		
+		hand.throwed();
 		
 	}
 	
+	
+	
+	/**
+	 * Whatto do in case of full house on first or second throw.
+	 * needs to know the status of the scorecard to do correct decission
+	 * @param card
+	 * @param hand
+	 */
+	public static void fullHouse(ScoreCard card,Hand hand){
+		int roll = hand.getRoll();
+		
+		int[] countedDice = new int[AI.diceMaxValue];
+		int weHaveThree = 0;
+		for (int i =0; i < countedDice.length; i++){
+			if(countedDice[i] == 3){
+				weHaveThree= i+1;
+			}
+		}
+		
+		if (weHaveThree == 0){
+			throw new IllegalArgumentException("tried fullhouse rethrow without a tripple");
+		}
+		
+		boolean upperFilled = false;
+		boolean fourFilled = false;
+		
+		if(card.scoreValues[weHaveThree-1] != 0){
+			upperFilled = true;
+		}
+		
+		if (card.scoreValues[ScoreCard.fourOfAKind] != 0){
+			fourFilled = true;
+		}
+		
+		AI.evalScores(hand.getValueArray(), countedDice);
+		if (roll == 1){
+			if (!upperFilled){
+				for (Dice dice : hand.getDices()){
+					if(dice.value != weHaveThree){
+						dice.throwDice();
+					}
+				}
+			}
+			
+			if (upperFilled && !fourFilled){
+				for (Dice dice : hand.getDices()){
+					if(dice.value != weHaveThree){
+						dice.throwDice();
+					}
+				}
+			}
+			
+		}
+		
+		if (roll == 2 ){
+			if (!upperFilled && weHaveThree >= 4){
+				for (Dice dice : hand.getDices()){
+					if(dice.value != weHaveThree){
+						dice.throwDice();
+					}
+				}
+			}
+		}
+		
+		
+		hand.throwed();
+	}
 	
 }
