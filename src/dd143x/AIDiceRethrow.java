@@ -1,9 +1,19 @@
 package dd143x;
 
+
+/**
+ * Part of the AI to caluculate which dices to rethrow and rethows them
+ * @author Niklas
+ *
+ */
 public class AIDiceRethrow {
 
 	
-	
+	/**
+	 * rethrows every dice in @hand that doesnt have the value @value
+	 * @param hand
+	 * @param value
+	 */
 	public static void rehrowInt(Hand hand, int value){
 		for (Dice dice : hand.getHand()){
 			if (dice.value != value){
@@ -58,6 +68,24 @@ public class AIDiceRethrow {
 				dice.throwDice();
 			}
 		}
+		
+	}
+	
+	
+	/**
+	 * rethrows every surplus copy of a dice value in order to get a straight
+	 * @param hand
+	 */
+	public static void rethrowStraight(Hand hand) {
+		boolean[] haveThisValue = {false, false, false, false, false, false};
+		for (Dice dice: hand.getHand()){
+			if (haveThisValue[dice.getValue()-1]){
+				dice.throwDice();
+			}else{
+				haveThisValue[dice.getValue()-1] = true;
+			}
+		}
+		
 		
 	}
 	
