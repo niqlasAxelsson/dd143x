@@ -54,6 +54,7 @@ public class ScoreCard {
 			if (scoreValues[i] == -1) {
 				emptyIndexes.add(i);
 			}
+			
 		}
 		return emptyIndexes;
 	}

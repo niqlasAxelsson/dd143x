@@ -10,7 +10,8 @@ public class AI {
 	final static public int diceMaxValue = 6;
 //	final static private float[] weights1 = [];
 	
-	
+	final static public int earlyGame = 5;
+	final static public int midGame = 10;
 	
 	public static void ai(ScoreCard scoreCard, Hand hand) {
 		LinkedList<Integer> emptyIndex = scoreCard.getEmptyIndexes();
@@ -50,6 +51,46 @@ public class AI {
 		// indexOutOfBoundsExeption
 	}
 
+	 public static void earlyGameAI(Hand hand, ScoreCard card ){
+		 LinkedList<Integer> freeScores = card.getEmptyIndexes();
+		 
+		 
+		 //start with check if we have a straight. 
+		 int smallStraightScore = smallStraightScore(hand.getValueArray());
+		 int bigStraightScore = largeStraightScore(hand.getValueArray());
+		 if ((smallStraightScore != 0)&&(freeScores.contains(ScoreCard.smallStraight))){
+			 card.scoreValues[ScoreCard.smallStraight] = smallStraightScore;
+			 return;
+		 }
+		 if ((bigStraightScore != 0)&&(freeScores.contains(ScoreCard.largeStraight))){
+			 card.scoreValues[ScoreCard.largeStraight] = bigStraightScore;
+			 return;
+		 }
+		 
+		 int[] countedDices = new int[diceMaxValue];
+		 
+		 countValues(hand.getValueArray(), countedDices);
+		 
+		 int valueToKeep = -1;
+		 
+		 for (int i = 0; i < countedDices.length; i++ ){
+			 if (countedDices[i] == 5){
+				 //we have yatzy
+				 card.scoreValues[ScoreCard.yatzy] = (i+1)*5;
+			 }
+			 
+		 }
+		 
+		 for( int j = 6; j >=3; j --){
+			 for (int k : countedDices){
+				 if (j == k){
+					 valueToKeep = j;
+				 }
+			 }
+		 }
+		 
+	 }
+	 
 	public static void evalScores(int[] diceValues, int[] scoreScore) {
 
 		// poäng för lika värden.
@@ -69,10 +110,10 @@ public class AI {
 		scoreScore[ScoreCard.yatzy] = yatzyScore(diceValues);
 	}
 
-	// beräkna poäng för #of a kind. summerar poängen för de antal
+	/** beräkna poäng för #of a kind. summerar poängen för de antal
 	// tärningar som
-	// har
-	// värdet number
+	// har värdet number
+	**/ 
 	public static int numberScore(int[] dices, int number) {
 		int score = 0;
 		for (int i : dices) {
@@ -178,6 +219,7 @@ public class AI {
 
 	public static int smallStraightScore(int[] hand) {
 		int returning = 0;
+		Arrays.sort(hand);
 		boolean smallStraightTrue = true;
 		for (int i = 0; i < 5; i++) {
 			if (i != i + 1) {
