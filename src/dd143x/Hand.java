@@ -42,4 +42,12 @@ public class Hand {
 		roll ++;
 	}
 	
+	
+	public void setDices(int[] values){
+		for (int i = 0; i < 5; i++){
+			dices[i].value = values[i];
+		}
+	}
+	
+	
 }

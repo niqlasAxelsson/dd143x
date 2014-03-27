@@ -35,36 +35,7 @@ public class EarlyGameAI {
 
 		AI.countValues(hand.getValueArray(), countedDices);
 
-		int valueToKeep = -1;
-
-		
-
-		//find 3 or 4 of a kind and set so aim for that if not already filled
-		for (int diceValueTemp = 6; diceValueTemp >= 3; diceValueTemp--) {
-			for (int nrDiceOfAKind : countedDices) {
-				if ((nrDiceOfAKind >= 3)&&(card.scoreValues[diceValueTemp-1] != -1 )) {
-					valueToKeep = diceValueTemp;
-					break;
-				}
-			}
-		}
-		
-		//catch pair or broken straight and decide what to go for
-		//starights already caught
-		if (valueToKeep != -1){
-			for (int isThisARealNumber = 6; isThisARealNumber >= 1; isThisARealNumber --){
-				if((countedDices[isThisARealNumber-1] == 2)&&(card.scoreValues[isThisARealNumber-1] != -1)){
-					valueToKeep = isThisARealNumber;
-					break;
-				}
-			}
-			for (int anotherFakkingInt = 6; anotherFakkingInt >=1; anotherFakkingInt --){
-				if (card.scoreValues[anotherFakkingInt-1] != -1){
-					valueToKeep = anotherFakkingInt;
-					break;
-				}
-			}
-		}
+		int valueToKeep = valueToKeep(card, countedDices);
 
 		// we start with 3 or 4 of a kind and we havnt filled that value
 		//throws 2 more times to collect those and fills in the score card
@@ -117,6 +88,38 @@ public class EarlyGameAI {
 			card.scoreValues[valueToKeep-1] = tempScore[valueToKeep-1];
 		}
 
+	}
+
+	public static int valueToKeep(ScoreCard card, int[] countedDices) {
+		int valueToKeep = -1;
+		LinkedList<Integer> freeScores = card.getEmptyIndexes();
+		//find 3 or 4 of a kind and set so aim for that if not already filled
+		for (int diceValueTemp = 6; diceValueTemp >= 1; diceValueTemp--) {
+				if ((countedDices[diceValueTemp -1] >= 3)&&(freeScores.contains(diceValueTemp -1) )) {
+					valueToKeep = diceValueTemp;
+					break;
+				}
+			
+		}
+		
+		//catch pair or broken straight and decide what to go for
+		//starights already caught
+		if (valueToKeep == -1){
+			for (int isThisARealNumber = countedDices.length-1; isThisARealNumber >= 0; isThisARealNumber --){
+			//	System.out.println("isThisARealNumber: " + isThisARealNumber);
+				if((countedDices[isThisARealNumber] == 2)&&(card.scoreValues[isThisARealNumber] != -1)){
+					return  isThisARealNumber;
+				}
+			}
+
+			for (int anotherFakkingInt = 6; anotherFakkingInt >=1; anotherFakkingInt --){
+				if (freeScores.contains(anotherFakkingInt-1)&&(countedDices[anotherFakkingInt -1] != 0)){
+					valueToKeep = anotherFakkingInt;
+					break;
+				}
+			}
+		}
+		return valueToKeep;
 	}
 
 	
