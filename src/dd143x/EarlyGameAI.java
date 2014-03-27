@@ -11,6 +11,9 @@ public class EarlyGameAI {
 		// start with check if we have a straight.
 		int smallStraightScore = AI.smallStraightScore(hand.getValueArray());
 		int bigStraightScore = AI.largeStraightScore(hand.getValueArray());
+		int weHaveYaatzy = AI.yatzyScore(hand.getValueArray());
+		
+		
 		if ((smallStraightScore != 0)
 				&& (freeScores.contains(ScoreCard.smallStraight))) {
 			card.scoreValues[ScoreCard.smallStraight] = smallStraightScore;
@@ -22,20 +25,19 @@ public class EarlyGameAI {
 			return;
 		}
 
+		if ((weHaveYaatzy != 0)
+				&& (freeScores.contains(ScoreCard.yatzy))) {
+			card.scoreValues[ScoreCard.yatzy] = weHaveYaatzy;
+			return;
+		}
+		
 		int[] countedDices = new int[AI.diceMaxValue];
 
 		AI.countValues(hand.getValueArray(), countedDices);
 
 		int valueToKeep = -1;
 
-		for (int i = 0; i < countedDices.length; i++) {
-			if ((countedDices[i] == 5)&&(card.scoreValues[ScoreCard.yatzy] != -1)){
-				// we have yatzy
-				card.scoreValues[ScoreCard.yatzy] = 50;
-				return;
-			}
-
-		}
+		
 
 		//find 3 or 4 of a kind and set so aim for that if not already filled
 		for (int diceValueTemp = 6; diceValueTemp >= 3; diceValueTemp--) {
