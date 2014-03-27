@@ -5,14 +5,16 @@ import java.util.LinkedList;
 
 import javax.script.ScriptContext;
 
+import sun.security.krb5.SCDynamicStoreConfig;
+
 public class AI {
 
 	final static public int diceMaxValue = 6;
-//	final static private float[] weights1 = [];
-	
+	// final static private float[] weights1 = [];
+
 	final static public int earlyGame = 5;
 	final static public int midGame = 10;
-	
+
 	public static void ai(ScoreCard scoreCard, Hand hand) {
 		LinkedList<Integer> emptyIndex = scoreCard.getEmptyIndexes();
 		int firstIndex = emptyIndex.poll();
@@ -32,65 +34,26 @@ public class AI {
 		// set a score to the different scoreCard options
 		int[] scoreScore = new int[15];
 		evalScores(diceValues, scoreScore);
-		
+
 		int highestIndex = 0;
 		int highestScore = 0;
 		LinkedList<Integer> freeScores = scoreCard.getEmptyIndexes();
-		for (int i : freeScores){
-			if (scoreScore[i] > highestScore){
+		for (int i : freeScores) {
+			if (scoreScore[i] > highestScore) {
 				highestIndex = i;
 				highestScore = scoreScore[i];
 			}
 		}
-		if(highestScore == 0){
+		if (highestScore == 0) {
 			scoreCard.scoreValues[freeScores.peek()] = 0;
-		}else{
-		scoreCard.scoreValues[highestIndex] = highestScore;
+		} else {
+			scoreCard.scoreValues[highestIndex] = highestScore;
 		}
 		// scoreCard.scoreValues[firstIndex] = score; //TODO metoden ger
 		// indexOutOfBoundsExeption
 	}
 
-	 public static void earlyGameAI(Hand hand, ScoreCard card ){
-		 LinkedList<Integer> freeScores = card.getEmptyIndexes();
-		 
-		 
-		 //start with check if we have a straight. 
-		 int smallStraightScore = smallStraightScore(hand.getValueArray());
-		 int bigStraightScore = largeStraightScore(hand.getValueArray());
-		 if ((smallStraightScore != 0)&&(freeScores.contains(ScoreCard.smallStraight))){
-			 card.scoreValues[ScoreCard.smallStraight] = smallStraightScore;
-			 return;
-		 }
-		 if ((bigStraightScore != 0)&&(freeScores.contains(ScoreCard.largeStraight))){
-			 card.scoreValues[ScoreCard.largeStraight] = bigStraightScore;
-			 return;
-		 }
-		 
-		 int[] countedDices = new int[diceMaxValue];
-		 
-		 countValues(hand.getValueArray(), countedDices);
-		 
-		 int valueToKeep = -1;
-		 
-		 for (int i = 0; i < countedDices.length; i++ ){
-			 if (countedDices[i] == 5){
-				 //we have yatzy
-				 card.scoreValues[ScoreCard.yatzy] = (i+1)*5;
-			 }
-			 
-		 }
-		 
-		 for( int j = 6; j >=3; j --){
-			 for (int k : countedDices){
-				 if (j == k){
-					 valueToKeep = j;
-				 }
-			 }
-		 }
-		 
-	 }
-	 
+	
 	public static void evalScores(int[] diceValues, int[] scoreScore) {
 
 		// poäng för lika värden.
@@ -110,10 +73,10 @@ public class AI {
 		scoreScore[ScoreCard.yatzy] = yatzyScore(diceValues);
 	}
 
-	/** beräkna poäng för #of a kind. summerar poängen för de antal
-	// tärningar som
-	// har värdet number
-	**/ 
+	/**
+	 * beräkna poäng för #of a kind. summerar poängen för de antal // tärningar
+	 * som // har värdet number
+	 **/
 	public static int numberScore(int[] dices, int number) {
 		int score = 0;
 		for (int i : dices) {
@@ -135,7 +98,6 @@ public class AI {
 
 		// räknar de olika valörerna
 		countValues(dices, valueTimes);
-		
 
 		// beäkna poängen för de olika paren,
 		// måste vara par
@@ -148,7 +110,7 @@ public class AI {
 		// beräkna vilken poäng som är störst.
 		for (int k = 0; k < diceMaxValue; k++) {
 			if (scores[k] >= returning) {
-				returning= scores[k];
+				returning = scores[k];
 			}
 		}
 
@@ -256,47 +218,45 @@ public class AI {
 		return returning;
 	}
 
-	
-	public static int fullHouseScore(int[] hand){
+	public static int fullHouseScore(int[] hand) {
 		int returning = 0;
 		int pairEyes = 0;
 		int trippleEyes = 0;
-		for (int i = 0; i < hand.length ; i ++){
-			if (hand[i] == 2){
-				pairEyes = i+1;
+		for (int i = 0; i < hand.length; i++) {
+			if (hand[i] == 2) {
+				pairEyes = i + 1;
 			}
-			if (hand[i] == 3){
-				trippleEyes = i+1;
+			if (hand[i] == 3) {
+				trippleEyes = i + 1;
 			}
 		}
-		
-		if (pairEyes != 0 && trippleEyes !=0){
-			returning = pairEyes*2 + trippleEyes*3;
+
+		if (pairEyes != 0 && trippleEyes != 0) {
+			returning = pairEyes * 2 + trippleEyes * 3;
 		}
-		
-		
+
 		return returning;
 	}
-	
+
 	public static int chansScore(int[] hand) {
 		int sum = 0;
-		
-		for (int i : hand){
+
+		for (int i : hand) {
 			sum += i;
 		}
 		return sum;
 	}
 
-	public static int yatzyScore(int[] hand){
+	public static int yatzyScore(int[] hand) {
 
 		int[] evaluated = new int[diceMaxValue];
 		countValues(hand, evaluated);
-		for (int i : evaluated){
-			if (i ==5){
+		for (int i : evaluated) {
+			if (i == 5) {
 				return 50;
 			}
 		}
 		return 0;
 	}
-	
+
 }
