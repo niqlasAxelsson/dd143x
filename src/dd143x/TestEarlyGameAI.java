@@ -54,12 +54,47 @@ public class TestEarlyGameAI {
 		
 		int[] testHandDices5 = {1,1,4,4,6};
 		int[] testCountedDices5 = {2,0,0,2,0,1};
+		int[] countDiceTest5 = new int[6];
+		AI.countValues(testHandDices5, countDiceTest5);
+		for (int i = 0; i<6; i++){
+			assertEquals(countDiceTest5[i], countDiceTest5[i]);
+		}
+		
+		
+		
 		hand.setDices(testHandDices5);
 		int returnValue5 = EarlyGameAI.valueToKeep(card, testCountedDices5);
 		assertEquals(4, returnValue5);
 		EarlyGameAI.play(hand, card);
 		assertNotEquals(-1, card.scoreValues[ScoreCard.fours]);
 		
+		hand.setDices(testHandDices5);
+		int returnValue6 = EarlyGameAI.valueToKeep(card, testCountedDices5);
+		assertEquals(1, returnValue6);
+		EarlyGameAI.play(hand, card);
+		assertNotEquals(-1, card.scoreValues[ScoreCard.ones]);
+		
+		
+		int[] testHandDices6 = {2, 2 ,2, 2,2};
+		hand.setDices(testHandDices6);
+		EarlyGameAI.play(hand, card);
+		assertEquals(50 , card.scoreValues[ScoreCard.yatzy]);
+		assertEquals(10, card.scoreValues[ScoreCard.twos]);
+		
+		
+		card = new ScoreCard();
+		card.scoreValues[1] = 23;
+		card.scoreValues[3] = 343;
+		
+		int[] testHandDices7 = {2,2,2,4,1};
+		hand.setDices(testHandDices7);
+		int[] countedDicesAgain = new int[6];
+		AI.countValues(hand.getValueArray(), countedDicesAgain);
+		int returnValue7 = EarlyGameAI.valueToKeep(card, countedDicesAgain); 
+		assertEquals(1, returnValue7);
+		card.scoreValues[0] = 432;
+		returnValue7 = EarlyGameAI.valueToKeep(card, countedDicesAgain); 
+		assertEquals(3, returnValue7);
 		
 	}
 }

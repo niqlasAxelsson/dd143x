@@ -34,6 +34,8 @@ public class EarlyGameAI {
 		AI.countValues(hand.getValueArray(), countedDices);
 
 		int valueToKeep = valueToKeep(card, countedDices);
+		
+		System.out.println("Value to keep: " + valueToKeep);
 
 		// we start with 3 or 4 of a kind and we havnt filled that value
 		// throws 2 more times to collect those and fills in the score card
@@ -41,55 +43,67 @@ public class EarlyGameAI {
 		if (valueToKeep != -1) {
 			AIDiceRethrow.allOfAKind(hand, valueToKeep);
 			AI.evalScores(hand.getValueArray(), tempScore);
+			AI.countValues(hand.getValueArray(), countedDices);
+			valueToKeep = valueToKeep(card, countedDices);
+			
+			System.out.print("Hand: ");
+			for (int j : hand.getValueArray()){
+				System.out.print(j + " ");
+			}
+			System.out.println("");
 
 			if ((tempScore[ScoreCard.yatzy] != 0)
-					&& (card.scoreValues[ScoreCard.yatzy] != -1)) {
+					&& (card.scoreValues[ScoreCard.yatzy] == -1)) {
 				card.scoreValues[ScoreCard.yatzy] = 50;
 				return;
 			}
 
 			if ((tempScore[ScoreCard.smallStraight] != 0)
-					&& (card.scoreValues[ScoreCard.smallStraight] != -1)) {
+					&& (card.scoreValues[ScoreCard.smallStraight] == -1)) {
 				card.scoreValues[ScoreCard.smallStraight] = 15;
 				return;
 			}
 
 			if ((tempScore[ScoreCard.largeStraight] != 0)
-					&& (card.scoreValues[ScoreCard.largeStraight] != -1)) {
+					&& (card.scoreValues[ScoreCard.largeStraight] == -1)) {
 				card.scoreValues[ScoreCard.largeStraight] = 20;
 				return;
 			}
-
 			// this is done 2 times, no more no less, so no own method
 			AIDiceRethrow.allOfAKind(hand, valueToKeep);
-			AI.evalScores(hand.getValueArray(), tempScore);
+			AI.evalScores(hand.getValueArray(), tempScore);System.out.print("Hand: ");
+			for (int j : hand.getValueArray()){
+				System.out.print(j + " ");
+			}
+			System.out.println("");
 
 			if ((tempScore[ScoreCard.yatzy] != 0)
-					&& (card.scoreValues[ScoreCard.yatzy] != -1)) {
+					&& (card.scoreValues[ScoreCard.yatzy] == -1)) {
 				card.scoreValues[ScoreCard.yatzy] = 50;
 				return;
 			}
 
 			if ((tempScore[ScoreCard.smallStraight] != 0)
-					&& (card.scoreValues[ScoreCard.smallStraight] != -1)) {
+					&& (card.scoreValues[ScoreCard.smallStraight] == -1)) {
 				card.scoreValues[ScoreCard.smallStraight] = 15;
 				return;
 			}
 
 			if ((tempScore[ScoreCard.largeStraight] != 0)
-					&& (card.scoreValues[ScoreCard.largeStraight] != -1)) {
+					&& (card.scoreValues[ScoreCard.largeStraight] == -1)) {
 				card.scoreValues[ScoreCard.largeStraight] = 20;
 				return;
 			}
 
-			// calc scoreto set
+			// calc score to set
 			int score = 0;
 			for (int i : hand.getValueArray()) {
 				if (i == valueToKeep) {
 					score += i;
 				}
 			}
-
+			
+			System.out.println("Score: " +score);
 			// fill in the one that should now have 3, 4 or 5 of a kind
 			card.scoreValues[valueToKeep - 1] = score;
 		}
@@ -105,6 +119,11 @@ public class EarlyGameAI {
 	 */
 	public static int valueToKeep(ScoreCard card, int[] countedDices) {
 		int valueToKeep = -1;
+		
+		//TODO när vi har fyllt i en kaetgori i övre halvan och har fyrtal ska det skrivas till fyrtal.
+		
+		//TODO bedömning av chans
+		
 		LinkedList<Integer> freeScores = card.getEmptyIndexes();
 		// find 3 or 4 of a kind and set so aim for that if not already filled
 		// yatzy is alredy caught
@@ -133,6 +152,12 @@ public class EarlyGameAI {
 					valueToKeep = anotherFakkingInt;
 					return anotherFakkingInt;
 				}
+			}
+		}
+		
+		for(int q = 1; q <=6 ; q++){
+			if (card.scoreValues[q-1] == -1){
+				return q;
 			}
 		}
 		return 0;
