@@ -184,7 +184,7 @@ public class AI {
 		Arrays.sort(hand);
 		boolean smallStraightTrue = true;
 		for (int i = 0; i < 5; i++) {
-			if (i != i + 1) {
+			if (hand[i] != i + 1) {
 				// This will only be false iff we dont have a small straight
 				// since dice i should have i as score, 1 index as is custom
 				// with board games
@@ -203,7 +203,7 @@ public class AI {
 		int returning = 0;
 		boolean smallStraightTrue = true;
 		for (int i = 0; i < 5; i++) {
-			if (i != i + 2) {
+			if (hand[i] != i + 2) {
 				// This will only be false iff we dont have a small straight
 				// since dice i should have i as score, 1 index as is custom
 				// with board games
