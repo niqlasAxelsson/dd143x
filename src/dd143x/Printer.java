@@ -62,5 +62,15 @@ public class Printer {
 				e.printStackTrace();
 			}
 		}
-	
+
+		
+		public static void printArray(int[] array){
+			System.out.print("[");
+			for (int j : array){
+				System.out.print(j + ", ");
+			}
+		System.out.println("]");
+		}
+		
 }
+

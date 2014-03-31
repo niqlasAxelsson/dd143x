@@ -96,5 +96,16 @@ public class TestEarlyGameAI {
 		returnValue7 = EarlyGameAI.valueToKeep(card, countedDicesAgain); 
 		assertEquals(3, returnValue7);
 		
+		card = new ScoreCard();
+		
+		card.scoreValues[ScoreCard.fives] = 20;
+		card.scoreValues[ScoreCard.yatzy] = 50;
+		Printer.printArray(card.scoreValues);
+		int[] testHand8 = {5,5,5,5,4};
+		hand.setDices(testHand8);
+		EarlyGameAI.play(hand, card);
+		Printer.printArray(card.scoreValues);
+		assertEquals(20, card.scoreValues[ScoreCard.fourOfAKind]);
+		
 	}
 }

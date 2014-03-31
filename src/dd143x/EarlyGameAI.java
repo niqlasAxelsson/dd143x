@@ -6,6 +6,7 @@ public class EarlyGameAI {
 
 	public static void play(Hand hand, ScoreCard card) {
 		LinkedList<Integer> freeScores = card.getEmptyIndexes();
+		System.out.println(freeScores.toString());
 		int[] tempScore = new int[15];
 
 		// start with check if we have a straight.
@@ -32,18 +33,16 @@ public class EarlyGameAI {
 		int[] countedDices = new int[AI.diceMaxValue];
 
 		AI.countValues(hand.getValueArray(), countedDices);
-
-		int valueToKeep = valueToKeep(card, countedDices);
 		
 
 		// we start with 3 or 4 of a kind and we havnt filled that value
 		// throws 2 more times to collect those and fills in the score card
 		// if we happen upon a straight or yatze that is filled in.
-		if (valueToKeep != -1) {
+			
+			int valueToKeep = valueToKeep(card, countedDices);
 			AIDiceRethrow.allOfAKind(hand, valueToKeep);
 			AI.evalScores(hand.getValueArray(), tempScore);
 			AI.countValues(hand.getValueArray(), countedDices);
-			valueToKeep = valueToKeep(card, countedDices);
 			
 
 			if ((tempScore[ScoreCard.yatzy] != 0)
@@ -64,8 +63,9 @@ public class EarlyGameAI {
 				return;
 			}
 			// this is done 2 times, no more no less, so no own method
+			valueToKeep = valueToKeep(card, countedDices);
 			AIDiceRethrow.allOfAKind(hand, valueToKeep);
-			AI.evalScores(hand.getValueArray(), tempScore);System.out.print("Hand: ");
+			AI.evalScores(hand.getValueArray(), tempScore);
 
 			if ((tempScore[ScoreCard.yatzy] != 0)
 					&& (card.scoreValues[ScoreCard.yatzy] == -1)) {
@@ -85,18 +85,18 @@ public class EarlyGameAI {
 				return;
 			}
 
+			System.out.println("nytt test");
+			System.out.println(valueToKeep);
+			System.out.println((freeScores.contains(ScoreCard.fourOfAKind)));
+			System.out.println(!freeScores.contains(valueToKeep -1));
 			
-			
-			if (freeScores.contains(ScoreCard.fourOfAKind) && ! freeScores.contains(valueToKeep -1) && valueToKeep > 3){
-				int[] doWeHaveFour = hand.getValueArray();
-				int numberOfKeepValueDices = 0;
-				for (int s : doWeHaveFour){
-					if (s == valueToKeep){
-						numberOfKeepValueDices ++;
-					}
-				}
-				if (numberOfKeepValueDices == 4){
+			if (freeScores.contains(ScoreCard.fourOfAKind) && !freeScores.contains(valueToKeep -1) && (valueToKeep > 3)){
+				int[] doWeHaveFour = new int[AI.diceMaxValue];
+				AI.countValues(hand.getValueArray(), doWeHaveFour);
+				
+				if (doWeHaveFour[valueToKeep -1] >= 4){
 					card.scoreValues[ScoreCard.fourOfAKind] = 4*valueToKeep;
+					return;
 				}
 				
 			}
@@ -113,7 +113,6 @@ public class EarlyGameAI {
 			
 			// fill in the one that should now have 3, 4 or 5 of a kind
 			card.scoreValues[valueToKeep - 1] = score;
-		}
 
 	}
 
@@ -139,6 +138,17 @@ public class EarlyGameAI {
 				return diceValueTemp;
 			}
 
+		}
+		
+		
+		if (freeScores.contains(ScoreCard.fourOfAKind)){
+		//	System.out.println("vg;wieurkv-=wsdgk;iusvhk;svg'vsdfhk");
+			for (int h = countedDices.length-1; h > 3; h --){
+				if (countedDices[h] >= 4){
+					int gjisd = h+1;
+					return h+1;
+				}
+			}
 		}
 		
 		// catch pair or broken straight and decide what to go for
