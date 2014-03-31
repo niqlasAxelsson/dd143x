@@ -78,6 +78,7 @@ public class TestEarlyGameAI {
 		int returnValue6 = EarlyGameAI.valueToKeep(card, testCountedDices5);
 		assertEquals(1, returnValue6);
 		EarlyGameAI.play(hand, card);
+		Printer.printArray(card.scoreValues);
 		assertNotEquals(-1, card.scoreValues[ScoreCard.ones]);
 		
 		
@@ -106,6 +107,14 @@ public class TestEarlyGameAI {
 		EarlyGameAI.play(hand, card);
 		Printer.printArray(card.scoreValues);
 		assertEquals(20, card.scoreValues[ScoreCard.fourOfAKind]);
+		
+		
+		int[] testHand9 = {6,6, 3,4,2};
+		card.scoreValues[ScoreCard.sixes] = 30;
+		hand.setDices(testHand9);
+		EarlyGameAI.play(hand, card);
+		Printer.printArray(card.scoreValues);
+		assertNotEquals(-1, card.scoreValues[ScoreCard.pair]);
 		
 	}
 }

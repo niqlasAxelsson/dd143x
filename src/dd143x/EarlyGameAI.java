@@ -90,18 +90,40 @@ public class EarlyGameAI {
 			//System.out.println((freeScores.contains(ScoreCard.fourOfAKind)));
 			//System.out.println(!freeScores.contains(valueToKeep -1));
 			
+			int[] howManyDoWeHave = new int[AI.diceMaxValue];
+			AI.countValues(hand.getValueArray(), howManyDoWeHave);
 			if (freeScores.contains(ScoreCard.fourOfAKind) && !freeScores.contains(valueToKeep -1) && (valueToKeep > 3)){
-				int[] doWeHaveFour = new int[AI.diceMaxValue];
-				AI.countValues(hand.getValueArray(), doWeHaveFour);
 				
-				if (doWeHaveFour[valueToKeep -1] >= 4){
+				if (howManyDoWeHave[valueToKeep -1] >= 4){
 					card.scoreValues[ScoreCard.fourOfAKind] = 4*valueToKeep;
 					return;
 				}
 				
 			}
 			
+
+			//större än 3, större än indexet för 3 på tärningarna
+			int highestPair = 0;
+			boolean weHaveMore = false;
+			for(int c = howManyDoWeHave.length-1; c  >=0; c --){
+				if (howManyDoWeHave[c] == 2){
+					if (highestPair ==0){
+					highestPair = c+1;
+				}
+				}
+				if (howManyDoWeHave[c] > 2){
+					weHaveMore = true;
+				}
+			}
 			
+			System.out.println(highestPair);
+			System.out.println(weHaveMore);
+			
+			if (highestPair >= 4 && !weHaveMore && freeScores.contains(ScoreCard.pair)){
+		
+				card.scoreValues[ScoreCard.pair] = highestPair*2;
+				return;
+			}
 			
 			// calc score to set
 			int score = 0;
@@ -145,7 +167,6 @@ public class EarlyGameAI {
 		//	//System.out.println("vg;wieurkv-=wsdgk;iusvhk;svg'vsdfhk");
 			for (int h = countedDices.length-1; h > 3; h --){
 				if (countedDices[h] >= 4){
-					int gjisd = h+1;
 					return h+1;
 				}
 			}
