@@ -85,4 +85,42 @@ public class ScoreCard {
 		return -1;
 	}
 
-}
+	/**
+	 * Returns true if it is possible to reach pair, else false
+	 * 
+	 * @return
+	 */
+	public boolean possibleToGetPar() {
+		int parScore = 0;
+		for (int i = 0; i < sixes; i++) {
+			if (scoreValues[i] >= 0) {
+				parScore += scoreValues[i];
+			} else {
+				parScore += i * 5;
+			}
+		}
+		
+		
+		if (parScore >= pointsToBonus) {
+			return true;
+		}
+		return false;
+	}
+	
+	
+	public  boolean doWeHaveBonus(){
+		int parScore = 0;
+		for (int i = 0; i < sixes; i++) {
+			if (scoreValues[i] >= 0) {
+				parScore += scoreValues[i];
+			} 
+		}
+		
+		if (parScore >= pointsToBonus) {
+			return true;
+		}
+		return false;
+	}
+	}
+	
+
