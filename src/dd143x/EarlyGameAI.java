@@ -35,7 +35,6 @@ public class EarlyGameAI {
 
 		int valueToKeep = valueToKeep(card, countedDices);
 		
-		//TODO när vi har fyllt i en kaetgori i övre halvan och har fyrtal ska det skrivas till fyrtal.
 
 		// we start with 3 or 4 of a kind and we havnt filled that value
 		// throws 2 more times to collect those and fills in the score card
@@ -129,7 +128,6 @@ public class EarlyGameAI {
 		int valueToKeep = -1;
 		
 		
-		//TODO bedömning av chans
 		
 		LinkedList<Integer> freeScores = card.getEmptyIndexes();
 		// find 3 or 4 of a kind and set so aim for that if not already filled
