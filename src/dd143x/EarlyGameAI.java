@@ -35,7 +35,7 @@ public class EarlyGameAI {
 
 		int valueToKeep = valueToKeep(card, countedDices);
 		
-		System.out.println("Value to keep: " + valueToKeep);
+		//TODO när vi har fyllt i en kaetgori i övre halvan och har fyrtal ska det skrivas till fyrtal.
 
 		// we start with 3 or 4 of a kind and we havnt filled that value
 		// throws 2 more times to collect those and fills in the score card
@@ -46,11 +46,6 @@ public class EarlyGameAI {
 			AI.countValues(hand.getValueArray(), countedDices);
 			valueToKeep = valueToKeep(card, countedDices);
 			
-			System.out.print("Hand: ");
-			for (int j : hand.getValueArray()){
-				System.out.print(j + " ");
-			}
-			System.out.println("");
 
 			if ((tempScore[ScoreCard.yatzy] != 0)
 					&& (card.scoreValues[ScoreCard.yatzy] == -1)) {
@@ -72,10 +67,6 @@ public class EarlyGameAI {
 			// this is done 2 times, no more no less, so no own method
 			AIDiceRethrow.allOfAKind(hand, valueToKeep);
 			AI.evalScores(hand.getValueArray(), tempScore);System.out.print("Hand: ");
-			for (int j : hand.getValueArray()){
-				System.out.print(j + " ");
-			}
-			System.out.println("");
 
 			if ((tempScore[ScoreCard.yatzy] != 0)
 					&& (card.scoreValues[ScoreCard.yatzy] == -1)) {
@@ -95,6 +86,24 @@ public class EarlyGameAI {
 				return;
 			}
 
+			
+			
+			if (freeScores.contains(ScoreCard.fourOfAKind) && ! freeScores.contains(valueToKeep -1) && valueToKeep > 3){
+				int[] doWeHaveFour = hand.getValueArray();
+				int numberOfKeepValueDices = 0;
+				for (int s : doWeHaveFour){
+					if (s == valueToKeep){
+						numberOfKeepValueDices ++;
+					}
+				}
+				if (numberOfKeepValueDices == 4){
+					card.scoreValues[ScoreCard.fourOfAKind] = 4*valueToKeep;
+				}
+				
+			}
+			
+			
+			
 			// calc score to set
 			int score = 0;
 			for (int i : hand.getValueArray()) {
@@ -103,7 +112,6 @@ public class EarlyGameAI {
 				}
 			}
 			
-			System.out.println("Score: " +score);
 			// fill in the one that should now have 3, 4 or 5 of a kind
 			card.scoreValues[valueToKeep - 1] = score;
 		}
@@ -114,20 +122,19 @@ public class EarlyGameAI {
 	 * calculates what value should be saved, does not consider straights since straight on first throw 
 	 * should alredy have been caught, fullHous is split upp
 	 * @param card
-	 * @param countedDices an int[6] were each position holds an int representing the number of dices having that value
+	 * @param countedDices an int[AI.diceMaxValue] were each position holds an int representing the number of dices having that value
 	 * @return the value to go for
 	 */
 	public static int valueToKeep(ScoreCard card, int[] countedDices) {
 		int valueToKeep = -1;
 		
-		//TODO när vi har fyllt i en kaetgori i övre halvan och har fyrtal ska det skrivas till fyrtal.
 		
 		//TODO bedömning av chans
 		
 		LinkedList<Integer> freeScores = card.getEmptyIndexes();
 		// find 3 or 4 of a kind and set so aim for that if not already filled
 		// yatzy is alredy caught
-		for (int diceValueTemp = 6; diceValueTemp >= 1; diceValueTemp--) {
+		for (int diceValueTemp = AI.diceMaxValue; diceValueTemp >= 1; diceValueTemp--) {
 			if ((countedDices[diceValueTemp - 1] >= 3)
 					&& (freeScores.contains(diceValueTemp - 1))) {
 				valueToKeep = diceValueTemp;
@@ -135,7 +142,7 @@ public class EarlyGameAI {
 			}
 
 		}
-
+		
 		// catch pair or broken straight and decide what to go for
 		// starights already caught
 		if (valueToKeep == -1) {
@@ -146,7 +153,7 @@ public class EarlyGameAI {
 				}
 			}
 
-			for (int anotherFakkingInt = 6; anotherFakkingInt >= 1; anotherFakkingInt--) {
+			for (int anotherFakkingInt = AI.diceMaxValue; anotherFakkingInt >= 1; anotherFakkingInt--) {
 				if (freeScores.contains(anotherFakkingInt - 1)
 						&& (countedDices[anotherFakkingInt - 1] != 0)) {
 					valueToKeep = anotherFakkingInt;
@@ -155,7 +162,7 @@ public class EarlyGameAI {
 			}
 		}
 		
-		for(int q = 1; q <=6 ; q++){
+		for(int q = 1; q <=AI.diceMaxValue ; q++){
 			if (card.scoreValues[q-1] == -1){
 				return q;
 			}
