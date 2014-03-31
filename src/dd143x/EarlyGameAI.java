@@ -6,7 +6,7 @@ public class EarlyGameAI {
 
 	public static void play(Hand hand, ScoreCard card) {
 		LinkedList<Integer> freeScores = card.getEmptyIndexes();
-		System.out.println(freeScores.toString());
+		//System.out.println(freeScores.toString());
 		int[] tempScore = new int[15];
 
 		// start with check if we have a straight.
@@ -85,10 +85,10 @@ public class EarlyGameAI {
 				return;
 			}
 
-			System.out.println("nytt test");
-			System.out.println(valueToKeep);
-			System.out.println((freeScores.contains(ScoreCard.fourOfAKind)));
-			System.out.println(!freeScores.contains(valueToKeep -1));
+			//System.out.println("nytt test");
+			//System.out.println(valueToKeep);
+			//System.out.println((freeScores.contains(ScoreCard.fourOfAKind)));
+			//System.out.println(!freeScores.contains(valueToKeep -1));
 			
 			if (freeScores.contains(ScoreCard.fourOfAKind) && !freeScores.contains(valueToKeep -1) && (valueToKeep > 3)){
 				int[] doWeHaveFour = new int[AI.diceMaxValue];
@@ -142,7 +142,7 @@ public class EarlyGameAI {
 		
 		
 		if (freeScores.contains(ScoreCard.fourOfAKind)){
-		//	System.out.println("vg;wieurkv-=wsdgk;iusvhk;svg'vsdfhk");
+		//	//System.out.println("vg;wieurkv-=wsdgk;iusvhk;svg'vsdfhk");
 			for (int h = countedDices.length-1; h > 3; h --){
 				if (countedDices[h] >= 4){
 					int gjisd = h+1;

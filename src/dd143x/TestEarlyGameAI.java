@@ -60,6 +60,12 @@ public class TestEarlyGameAI {
 			assertEquals(countDiceTest5[i], countDiceTest5[i]);
 		}
 		
+		int[] testHandDices6 = {2, 2 ,2, 2,2};
+		hand.setDices(testHandDices6);
+		EarlyGameAI.play(hand, card);
+		assertEquals(50 , card.scoreValues[ScoreCard.yatzy]);
+		assertEquals(10, card.scoreValues[ScoreCard.twos]);
+		
 		
 		
 		hand.setDices(testHandDices5);
@@ -74,12 +80,6 @@ public class TestEarlyGameAI {
 		EarlyGameAI.play(hand, card);
 		assertNotEquals(-1, card.scoreValues[ScoreCard.ones]);
 		
-		
-		int[] testHandDices6 = {2, 2 ,2, 2,2};
-		hand.setDices(testHandDices6);
-		EarlyGameAI.play(hand, card);
-		assertEquals(50 , card.scoreValues[ScoreCard.yatzy]);
-		assertEquals(10, card.scoreValues[ScoreCard.twos]);
 		
 		
 		card = new ScoreCard();
