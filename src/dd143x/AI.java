@@ -273,4 +273,33 @@ public class AI {
 		return 0;
 	}
 
+	public static boolean catchHand(Hand hand, ScoreCard card){
+		LinkedList<Integer> freeScores = card.getEmptyIndexes();
+		//System.out.println(freeScores.toString());
+	
+
+		// start with check if we have a straight.
+		int smallStraightScore = AI.smallStraightScore(hand.getValueArray());
+		int bigStraightScore = AI.largeStraightScore(hand.getValueArray());
+		int weHaveYaatzy = AI.yatzyScore(hand.getValueArray());
+
+		if ((smallStraightScore != 0)
+				&& (freeScores.contains(ScoreCard.smallStraight))) {
+			card.scoreValues[ScoreCard.smallStraight] = smallStraightScore;
+			return true;
+		}
+		if ((bigStraightScore != 0)
+				&& (freeScores.contains(ScoreCard.largeStraight))) {
+			card.scoreValues[ScoreCard.largeStraight] = bigStraightScore;
+			return true;
+		}
+
+		if ((weHaveYaatzy != 0) && (freeScores.contains(ScoreCard.yatzy))) {
+			card.scoreValues[ScoreCard.yatzy] = weHaveYaatzy;
+			return true;
+		}
+
+		return false;
+	}
+	
 }

@@ -6,30 +6,12 @@ public class EarlyGameAI {
 
 	public static void play(Hand hand, ScoreCard card) {
 		LinkedList<Integer> freeScores = card.getEmptyIndexes();
-		//System.out.println(freeScores.toString());
+		boolean checked = AI.catchHand(hand, card);
+		
+		if (checked){
+			return;
+		}
 		int[] tempScore = new int[15];
-
-		// start with check if we have a straight.
-		int smallStraightScore = AI.smallStraightScore(hand.getValueArray());
-		int bigStraightScore = AI.largeStraightScore(hand.getValueArray());
-		int weHaveYaatzy = AI.yatzyScore(hand.getValueArray());
-
-		if ((smallStraightScore != 0)
-				&& (freeScores.contains(ScoreCard.smallStraight))) {
-			card.scoreValues[ScoreCard.smallStraight] = smallStraightScore;
-			return;
-		}
-		if ((bigStraightScore != 0)
-				&& (freeScores.contains(ScoreCard.largeStraight))) {
-			card.scoreValues[ScoreCard.largeStraight] = bigStraightScore;
-			return;
-		}
-
-		if ((weHaveYaatzy != 0) && (freeScores.contains(ScoreCard.yatzy))) {
-			card.scoreValues[ScoreCard.yatzy] = weHaveYaatzy;
-			return;
-		}
-
 		int[] countedDices = new int[AI.diceMaxValue];
 
 		AI.countValues(hand.getValueArray(), countedDices);
@@ -45,21 +27,8 @@ public class EarlyGameAI {
 			AI.countValues(hand.getValueArray(), countedDices);
 			
 
-			if ((tempScore[ScoreCard.yatzy] != 0)
-					&& (card.scoreValues[ScoreCard.yatzy] == -1)) {
-				card.scoreValues[ScoreCard.yatzy] = 50;
-				return;
-			}
-
-			if ((tempScore[ScoreCard.smallStraight] != 0)
-					&& (card.scoreValues[ScoreCard.smallStraight] == -1)) {
-				card.scoreValues[ScoreCard.smallStraight] = 15;
-				return;
-			}
-
-			if ((tempScore[ScoreCard.largeStraight] != 0)
-					&& (card.scoreValues[ScoreCard.largeStraight] == -1)) {
-				card.scoreValues[ScoreCard.largeStraight] = 20;
+			checked = AI.catchHand(hand, card);
+			if (checked){
 				return;
 			}
 			// this is done 2 times, no more no less, so no own method
@@ -67,21 +36,8 @@ public class EarlyGameAI {
 			AIDiceRethrow.allOfAKind(hand, valueToKeep);
 			AI.evalScores(hand.getValueArray(), tempScore);
 
-			if ((tempScore[ScoreCard.yatzy] != 0)
-					&& (card.scoreValues[ScoreCard.yatzy] == -1)) {
-				card.scoreValues[ScoreCard.yatzy] = 50;
-				return;
-			}
-
-			if ((tempScore[ScoreCard.smallStraight] != 0)
-					&& (card.scoreValues[ScoreCard.smallStraight] == -1)) {
-				card.scoreValues[ScoreCard.smallStraight] = 15;
-				return;
-			}
-
-			if ((tempScore[ScoreCard.largeStraight] != 0)
-					&& (card.scoreValues[ScoreCard.largeStraight] == -1)) {
-				card.scoreValues[ScoreCard.largeStraight] = 20;
+			checked = AI.catchHand(hand, card);
+			if(checked){
 				return;
 			}
 
@@ -115,9 +71,7 @@ public class EarlyGameAI {
 					weHaveMore = true;
 				}
 			}
-			
-			System.out.println(highestPair);
-			System.out.println(weHaveMore);
+		
 			
 			if (highestPair >= 4 && !weHaveMore && freeScores.contains(ScoreCard.pair)){
 		

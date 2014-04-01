@@ -1,6 +1,9 @@
 package dd143x;
 
+import java.util.Arrays;
 import java.util.LinkedList;
+
+import com.sun.swing.internal.plaf.basic.resources.basic;
 
 public class MidGameAI {
 
@@ -16,24 +19,8 @@ public class MidGameAI {
 		}
 
 		// start with check if we have small/large straight or yatzy
-		int smallStraightScore = AI.smallStraightScore(hand.getValueArray());
-		int bigStraightScore = AI.largeStraightScore(hand.getValueArray());
-		int weHaveYaatzy = AI.yatzyScore(hand.getValueArray());
-
-		if ((smallStraightScore != 0)
-				&& (freeScores.contains(ScoreCard.smallStraight))) {
-			card.scoreValues[ScoreCard.smallStraight] = smallStraightScore;
-			return;
-		}
-
-		if ((bigStraightScore != 0)
-				&& (freeScores.contains(ScoreCard.largeStraight))) {
-			card.scoreValues[ScoreCard.largeStraight] = bigStraightScore;
-			return;
-		}
-
-		if ((weHaveYaatzy != 0) && (freeScores.contains(ScoreCard.yatzy))) {
-			card.scoreValues[ScoreCard.yatzy] = weHaveYaatzy;
+		boolean checked = AI.catchHand(hand, card);
+		if (checked){
 			return;
 		}
 
@@ -136,13 +123,38 @@ public class MidGameAI {
 					
 				}
 				
+			}
+			
+			if (stegCheck(hand)){
+				int[] countedDices = new int[6];
 				
-				
-
 			}
 
 		}
 	}
+	
+	
+	public static boolean stegCheck(Hand hand){
+		Arrays.sort(hand.getValueArray());
+		String s = new String();
+		for (int k : hand.getValueArray()){
+			s += k;
+		}
+		
+		boolean first = s.contains("1234");
+		boolean second = s.contains("2345");
+		boolean third = s.contains("3456");
+		
+		if(first || second || third){
+			return true;
+		}
+		
+		
+		
+		
+		return false;
+	}
+	
 	
 	
 }
