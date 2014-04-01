@@ -8,6 +8,17 @@ public class TestEarlyGameAI {
 
 	@Test
 	public void test() {
+		
+		
+		int[] testPairScore = {2,2, 4,5,5};
+		int resultPairTest = AI.pairScore(testPairScore);
+		assertEquals(10, resultPairTest);
+		
+		int[] tesEval = new int[15];
+		AI.evalScores(testPairScore, tesEval);
+		Printer.printArray(tesEval);
+		
+		
 		ScoreCard card = new ScoreCard();
 		Hand hand = new Hand();
 		int[] testcountedDices1 = { 0, 0, 2, 3, 0, 0 };

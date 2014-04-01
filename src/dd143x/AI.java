@@ -61,16 +61,27 @@ public class AI {
 			int score = numberScore(diceValues, i);
 			scoreScore[i - 1] = score;
 		}
+		//Printer.printArray(scoreScore);
 
 		scoreScore[ScoreCard.pair] = pairScore(diceValues);
+		//Printer.printArray(scoreScore);
 		scoreScore[ScoreCard.twoPair] = doublePairScore(diceValues);
+		//Printer.printArray(scoreScore);
 		scoreScore[ScoreCard.threeOfAKind] = checkTripleScore(diceValues);
+//		Printer.printArray(scoreScore);
 		scoreScore[ScoreCard.fourOfAKind] = checkQuadruopleScore(diceValues);
-		scoreScore[ScoreCard.smallStraight] = smallStraightScore(scoreScore);
-		scoreScore[ScoreCard.largeStraight] = largeStraightScore(scoreScore);
-		scoreScore[ScoreCard.fullHouse] = fullHouseScore(scoreScore);
+//		Printer.printArray(scoreScore);
+		scoreScore[ScoreCard.smallStraight] = smallStraightScore(diceValues);
+//		Printer.printArray(scoreScore);
+		scoreScore[ScoreCard.largeStraight] = largeStraightScore(diceValues);
+//		Printer.printArray(scoreScore);
+		scoreScore[ScoreCard.fullHouse] = fullHouseScore(diceValues);
+//		Printer.printArray(scoreScore);
 		scoreScore[ScoreCard.chance] = chansScore(diceValues);
+//		Printer.printArray(scoreScore);
 		scoreScore[ScoreCard.yatzy] = yatzyScore(diceValues);
+//		Printer.printArray(scoreScore);
+		
 	}
 
 	/**
@@ -136,10 +147,10 @@ public class AI {
 		int firstPairEyes = 0;
 
 		for (int i : valueTimes) {
-			if (i == 2 && !firstPair) {
+			if (i >= 2 && !firstPair) {
 				firstPairEyes = eyeCounter;
 				firstPair = true; // we have found our first pair
-			} else if (i == 2 && firstPair) {
+			} else if (i >= 2 && firstPair) {
 				return firstPairEyes * 2 + eyeCounter * 2;
 			}
 			eyeCounter++;
@@ -222,11 +233,14 @@ public class AI {
 		int returning = 0;
 		int pairEyes = 0;
 		int trippleEyes = 0;
-		for (int i = 0; i < hand.length; i++) {
-			if (hand[i] == 2) {
+		int[] counted = new int[6];
+		countValues(hand, counted);
+		
+		for (int i = 0; i < counted.length; i++) {
+			if (counted[i] == 2) {
 				pairEyes = i + 1;
 			}
-			if (hand[i] == 3) {
+			if (counted[i] == 3) {
 				trippleEyes = i + 1;
 			}
 		}
