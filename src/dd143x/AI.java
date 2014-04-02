@@ -280,6 +280,7 @@ public class AI {
 
 		// start with check if we have a straight.
 		int smallStraightScore = AI.smallStraightScore(hand.getValueArray());
+		Printer.printArray(hand.getValueArray());
 		int bigStraightScore = AI.largeStraightScore(hand.getValueArray());
 		int weHaveYaatzy = AI.yatzyScore(hand.getValueArray());
 

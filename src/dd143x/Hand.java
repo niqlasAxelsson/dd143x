@@ -1,5 +1,7 @@
 package dd143x;
 
+import java.util.Arrays;
+
 public class Hand {
 	
 	private Dice[] dices = new Dice[5];
@@ -29,7 +31,7 @@ public class Hand {
 		for (int i =0; i < dices.length; i ++){
 			returning[i] = dices[i].getValue();
 		}
-		
+		Arrays.sort(returning);
 		return returning;
 		
 	}

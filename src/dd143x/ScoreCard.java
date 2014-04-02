@@ -54,34 +54,34 @@ public class ScoreCard {
 			if (scoreValues[i] == -1) {
 				emptyIndexes.add(i);
 			}
-			
+
 		}
 		return emptyIndexes;
 	}
 
-
 	/**
 	 * returns -1 if under par, 0 if on par and 1 if over par
+	 * 
 	 * @return
 	 */
-	public int onPar(){
+	public int onPar() {
 		int parScore = 0;
-		
-		for (int i = 0; i < sixes; i ++){
-			if (scoreValues[i] >= 0){
+
+		for (int i = 0; i < sixes; i++) {
+			if (scoreValues[i] >= 0) {
 				parScore += scoreValues[i];
-			}else{
-				parScore += i*3;
+			} else {
+				parScore += i * 3;
 			}
 		}
-		
-		if( parScore > pointsToBonus){
+
+		if (parScore > pointsToBonus) {
 			return 1;
 		}
-		if (parScore == pointsToBonus){
+		if (parScore == pointsToBonus) {
 			return 0;
 		}
-		
+
 		return -1;
 	}
 
@@ -99,28 +99,29 @@ public class ScoreCard {
 				parScore += i * 5;
 			}
 		}
-		
-		
+
 		if (parScore >= pointsToBonus) {
 			return true;
 		}
 		return false;
 	}
-	
-	
-	public  boolean doWeHaveBonus(){
+
+	public boolean doWeHaveBonus() {
 		int parScore = 0;
 		for (int i = 0; i < sixes; i++) {
 			if (scoreValues[i] >= 0) {
 				parScore += scoreValues[i];
-			} 
+			}
 		}
-		
+
 		if (parScore >= pointsToBonus) {
 			return true;
 		}
 		return false;
 	}
-	}
 	
-
+	
+	public void setScores(int[] array){
+		scoreValues = array;
+	}
+}

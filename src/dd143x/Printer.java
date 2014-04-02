@@ -71,6 +71,14 @@ public class Printer {
 			}
 		System.out.println("]");
 		}
+
+		public static void printArraybOOL(boolean[] stegarKollade){
+			System.out.print("[");
+			for (Object j : stegarKollade){
+				System.out.print(j.toString() + ", ");
+			}
+		System.out.println("]");
+		}
 		
 }
 

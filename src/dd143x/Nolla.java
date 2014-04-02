@@ -19,6 +19,7 @@ public class Nolla {
 		for (int i : nollaUppe){
 			if (freeSCores.contains(i)){
 				card.scoreValues[i] = 0;
+				return;
 			}
 		}
 		
@@ -29,6 +30,7 @@ public class Nolla {
 		for (int i : nolla){
 			if (freeSCores.contains(i)){
 				card.scoreValues[i] = 0;
+				return;
 			}
 		}
 		

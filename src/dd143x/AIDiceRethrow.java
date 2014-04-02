@@ -81,10 +81,10 @@ public class AIDiceRethrow {
 	 * 
 	 * @param hand
 	 */
-	public static void straight(Hand hand) {
+	public static void largeStraight(Hand hand) {
 		boolean[] haveThisValue = { false, false, false, false, false, false };
 		for (Dice dice : hand.getDices()) {
-			if (haveThisValue[dice.getValue() - 1]) {
+			if (haveThisValue[dice.getValue() - 1] || dice.value ==1) {
 				dice.throwDice();
 			} else {
 				haveThisValue[dice.getValue() - 1] = true;
@@ -94,6 +94,25 @@ public class AIDiceRethrow {
 
 	}
 
+	
+	/**
+	 * rethrows every surplus copy of a dice value in order to get a straight
+	 * 
+	 * @param hand
+	 */
+	public static void smallStraight(Hand hand) {
+		boolean[] haveThisValue = { false, false, false, false, false, false };
+		for (Dice dice : hand.getDices()) {
+			if (haveThisValue[dice.getValue() - 1] || dice.value == 6) {
+				dice.throwDice();
+			} else {
+				haveThisValue[dice.getValue() - 1] = true;
+			}
+		}
+		hand.throwed();
+
+	}
+	
 	/**
 	 * Whatto do in case of full house on first or second throw. needs to know
 	 * the status of the scorecard to do correct decission
