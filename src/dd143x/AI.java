@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import javax.script.ScriptContext;
 
+import sun.awt.image.ImageWatched.Link;
 import sun.security.krb5.SCDynamicStoreConfig;
 
 public class AI {
@@ -15,42 +16,69 @@ public class AI {
 	final static public int earlyGame = 5;
 	final static public int midGame = 10;
 
-	public static void ai(ScoreCard scoreCard, Hand hand) {
-		LinkedList<Integer> emptyIndex = scoreCard.getEmptyIndexes();
-		int firstIndex = emptyIndex.poll();
-		Dice[] dices = hand.getDices();
-		int score = 0;
-		int[] diceValues = new int[5];
-		int tempCounter = 0;
-
-		for (Dice dice : dices) {
-			diceValues[tempCounter] = dice.getValue();
-			score += dice.getValue();
-			tempCounter++;
-		}
-
-		Arrays.sort(diceValues);
-
-		// set a score to the different scoreCard options
-		int[] scoreScore = new int[15];
-		evalScores(diceValues, scoreScore);
-
-		int highestIndex = 0;
-		int highestScore = 0;
-		LinkedList<Integer> freeScores = scoreCard.getEmptyIndexes();
-		for (int i : freeScores) {
-			if (scoreScore[i] > highestScore) {
-				highestIndex = i;
-				highestScore = scoreScore[i];
-			}
-		}
-		if (highestScore == 0) {
-			scoreCard.scoreValues[freeScores.peek()] = 0;
-		} else {
-			scoreCard.scoreValues[highestIndex] = highestScore;
-		}
-		// scoreCard.scoreValues[firstIndex] = score; //TODO metoden ger
-		// indexOutOfBoundsExeption
+	public static void ai(ScoreCard card, Hand hand) {
+//		LinkedList<Integer> emptyIndex = scoreCard.getEmptyIndexes();
+//		int firstIndex = emptyIndex.poll();
+//		Dice[] dices = hand.getDices();
+//		int score = 0;
+//		int[] diceValues = new int[5];
+//		int tempCounter = 0;
+//
+//		for (Dice dice : dices) {
+//			diceValues[tempCounter] = dice.getValue();
+//			score += dice.getValue();
+//			tempCounter++;
+//		}
+//
+//		Arrays.sort(diceValues);
+//
+//		// set a score to the different scoreCard options
+//		int[] scoreScore = new int[15];
+//		evalScores(diceValues, scoreScore);
+//
+//		int highestIndex = 0;
+//		int highestScore = 0;
+//		LinkedList<Integer> freeScores = scoreCard.getEmptyIndexes();
+//		for (int i : freeScores) {
+//			if (scoreScore[i] > highestScore) {
+//				highestIndex = i;
+//				highestScore = scoreScore[i];
+//			}
+//		}
+//		if (highestScore == 0) {
+//			scoreCard.scoreValues[freeScores.peek()] = 0;
+//		} else {
+//			scoreCard.scoreValues[highestIndex] = highestScore;
+//		}
+//		// scoreCard.scoreValues[firstIndex] = score; //TODO metoden ger
+//		// indexOutOfBoundsExeption
+	
+	
+	LinkedList<Integer> freeScores = card.getEmptyIndexes();
+	
+	int turn = 15 - freeScores.size() + 1;
+	
+	if (turn <= earlyGame ){
+		EarlyGameAI.play(hand, card);
+		System.out.println("Early");
+		Printer.printArray(hand.getValueArray());
+		Printer.printArray(card.scoreValues);
+		return;
+	}
+	
+	if (turn <= midGame){
+		System.out.println("mid");
+		MidGameAI.play(hand, card);
+		Printer.printArray(hand.getValueArray());
+		Printer.printArray(card.scoreValues);
+		return;
+	}
+	
+	System.out.println("late");
+	LateGameAI.play(card, hand);
+	Printer.printArray(hand.getValueArray());
+	Printer.printArray(card.scoreValues);
+	
 	}
 
 	
@@ -136,7 +164,7 @@ public class AI {
 		}
 	}
 
-	private static int doublePairScore(int[] dices) {
+	public static int doublePairScore(int[] dices) {
 		int returning = 0;
 
 		int[] valueTimes = new int[diceMaxValue];

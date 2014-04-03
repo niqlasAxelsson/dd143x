@@ -199,9 +199,9 @@ public class AIDiceRethrow {
 		for (Dice dice : hand.getDices()) {
 			if (dice.value != i && dice.value != j) {
 				dice.throwDice();
-				hand.throwed();
 			}
 		}
+		hand.throwed();
 	}
 
 	public static void getFullHouse(Hand hand) {
@@ -222,11 +222,103 @@ public class AIDiceRethrow {
 				if (dice.value != valueToKeep && dice.value != otherValue) {
 					dice.throwDice();
 				}
-				hand.throwed();
-				return;
+			}
+			hand.throwed();
+			return;
+
+		}
+
+		if (AI.doublePairScore(hand.getValueArray()) != 0) {
+			twoPairToHouse(hand);
+			return;
+		}
+
+		int pairScore = AI.pairScore(hand.getValueArray());
+		if (pairScore != 0) {
+			valueToKeep = pairScore / 2;
+			int otherValue = 0;
+			for (int e = 5; e >= 2; e--) {
+				if (countedDices[e] == 1) {
+					otherValue = e + 1;
+					break;
+				}
+			}
+			for (Dice dice : hand.getDices()) {
+				if (dice.value != valueToKeep && dice.value != otherValue) {
+					dice.throwDice();
+				}
+			}
+			hand.throwed();
+			return;
+		}
+
+		int i = 0;
+		int j = 0;
+		for (int c = countedDices.length - 1; c >= 0; c--) {
+			if (countedDices[c] == 1) {
+				if (i == 0) {
+					i = c + 1;
+				} else {
+					j = c + 1;
+					break;
+				}
+			}
+		}
+
+		for (Dice dice : hand.getDices()) {
+			if (dice.value != i && dice.value != j) {
+				dice.throwDice();
+			}
+		}
+		hand.throwed();
+	}
+
+	public static void getTwoPair(Hand hand) {
+		int[] countedDices = new int[6];
+		AI.countValues(hand.getValueArray(), countedDices);
+
+		int keep1 = 0;
+		int keep2 = 0;
+
+		for (int i = 5; i >= 0; i--) {
+
+			if (countedDices[i] > 0) {
+				if (keep1 == 0) {
+					keep1 = i + 1;
+				} else if (keep2 == 0) {
+					keep2 = i + 1;
+				}
+
+				if (keep1 != 0 && keep2 != 0) {
+					if (keep1 > keep2) {
+						if (countedDices[keep2 - 1] < countedDices[i]) {
+							keep2 = i + 1;
+						}
+					} else {
+						if (countedDices[keep1 - 1] < countedDices[i]) {
+							keep1 = i + 1;
+						}
+					}
+				}
+
 			}
 
 		}
+
+		for (Dice dice : hand.getDices()){
+			if(dice.value != keep1 && keep2 != dice.value){
+				System.out.println("kastar om: "+ dice.value);
+				dice.throwDice();
+			}
+			if (countedDices[dice.value -1] > 2){
+				countedDices[dice.value-1] --;
+				System.out.println("kastar om: "+ dice.value);
+				dice.throwDice();
+			}
+			
+		}
+		
+		hand.throwed();
 
 	}
 

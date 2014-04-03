@@ -89,6 +89,8 @@ public class EarlyGameAI {
 			
 			// fill in the one that should now have 3, 4 or 5 of a kind
 			card.scoreValues[valueToKeep - 1] = score;
+			
+			System.out.println("igenom early");
 
 	}
 

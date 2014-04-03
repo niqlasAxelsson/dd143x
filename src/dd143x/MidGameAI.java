@@ -24,11 +24,15 @@ public class MidGameAI {
 		// else the player is over par
 		if (card.onPar() == -1) {
 			underPar(card, hand);
+			return;
 		} else if (card.onPar() == 0) {
 			onPar(card, hand);
+			return;
 		} else {
 			overPar(card, hand);
+			return;
 		}
+		
 	}
 
 	public static void onPar(ScoreCard card, Hand hand) {
@@ -206,14 +210,11 @@ public class MidGameAI {
 				return;
 			}
 
-			if (evalScores[ScoreCard.chance] >= 19
-					&& freeScores.contains(ScoreCard.chance)) {
-				card.scoreValues[ScoreCard.chance] = evalScores[ScoreCard.chance];
-				return;
-			}
+		
 
 			// nolla
-			Nolla.nollaUppe(card);
+			Nolla.nolla(card, hand);
+			
 			return;
 
 		}

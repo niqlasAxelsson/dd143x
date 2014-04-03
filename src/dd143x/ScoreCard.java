@@ -108,9 +108,10 @@ public class ScoreCard {
 
 	public boolean doWeHaveBonus() {
 		int parScore = 0;
-		for (int i = 0; i < sixes; i++) {
+		for (int i = 0; i <= sixes; i++) {
 			if (scoreValues[i] >= 0) {
 				parScore += scoreValues[i];
+				System.out.println(parScore);
 			}
 		}
 
