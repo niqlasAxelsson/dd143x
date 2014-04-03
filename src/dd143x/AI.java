@@ -61,26 +61,26 @@ public class AI {
 			int score = numberScore(diceValues, i);
 			scoreScore[i - 1] = score;
 		}
-		//Printer.printArray(scoreScore);
+		////Printer.printArray(scoreScore);
 
 		scoreScore[ScoreCard.pair] = pairScore(diceValues);
-		//Printer.printArray(scoreScore);
+		////Printer.printArray(scoreScore);
 		scoreScore[ScoreCard.twoPair] = doublePairScore(diceValues);
-		//Printer.printArray(scoreScore);
+		////Printer.printArray(scoreScore);
 		scoreScore[ScoreCard.threeOfAKind] = checkTripleScore(diceValues);
-//		Printer.printArray(scoreScore);
+//		//Printer.printArray(scoreScore);
 		scoreScore[ScoreCard.fourOfAKind] = checkQuadruopleScore(diceValues);
-//		Printer.printArray(scoreScore);
+//		//Printer.printArray(scoreScore);
 		scoreScore[ScoreCard.smallStraight] = smallStraightScore(diceValues);
-//		Printer.printArray(scoreScore);
+//		//Printer.printArray(scoreScore);
 		scoreScore[ScoreCard.largeStraight] = largeStraightScore(diceValues);
-//		Printer.printArray(scoreScore);
+//		//Printer.printArray(scoreScore);
 		scoreScore[ScoreCard.fullHouse] = fullHouseScore(diceValues);
-//		Printer.printArray(scoreScore);
+//		//Printer.printArray(scoreScore);
 		scoreScore[ScoreCard.chance] = chansScore(diceValues);
-//		Printer.printArray(scoreScore);
+//		//Printer.printArray(scoreScore);
 		scoreScore[ScoreCard.yatzy] = yatzyScore(diceValues);
-//		Printer.printArray(scoreScore);
+//		//Printer.printArray(scoreScore);
 		
 	}
 
@@ -165,7 +165,7 @@ public class AI {
 		int[] valueTimes = new int[6];
 		countValues(dices, valueTimes);
 		for (int i : valueTimes) {
-			if (i == 3) { // we have three of this dice, dice points indicated
+			if (i >= 3) { // we have three of this dice, dice points indicated
 							// by trippleDice
 				return trippleDice * 3;
 			}
@@ -180,7 +180,7 @@ public class AI {
 		int[] valueTimes = new int[6];
 		countValues(dices, valueTimes);
 		for (int i : valueTimes) {
-			if (i == 4) { // we have three of this dice, dice points indicated
+			if (i >= 4) { // we have three of this dice, dice points indicated
 							// by trippleDice
 				return trippleDice * 4;
 			}
@@ -275,12 +275,12 @@ public class AI {
 
 	public static boolean catchHand(Hand hand, ScoreCard card){
 		LinkedList<Integer> freeScores = card.getEmptyIndexes();
-		//System.out.println(freeScores.toString());
+		////System.out.println(freeScores.toString());
 	
 
 		// start with check if we have a straight.
 		int smallStraightScore = AI.smallStraightScore(hand.getValueArray());
-		Printer.printArray(hand.getValueArray());
+		//Printer.printArray(hand.getValueArray());
 		int bigStraightScore = AI.largeStraightScore(hand.getValueArray());
 		int weHaveYaatzy = AI.yatzyScore(hand.getValueArray());
 
@@ -300,6 +300,16 @@ public class AI {
 			return true;
 		}
 
+		return false;
+	}
+	
+	
+	public static boolean fullHouse(ScoreCard card , Hand hand){
+		int score = fullHouseScore(hand.getValueArray());
+		if (score != 0 && card.scoreValues[ScoreCard.fullHouse] == -1){
+			card.scoreValues[ScoreCard.fullHouse] = score;
+			return true;
+		}
 		return false;
 	}
 	
