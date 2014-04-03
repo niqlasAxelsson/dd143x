@@ -1,19 +1,12 @@
 package dd143x;
 
-import java.util.Arrays;
 import java.util.LinkedList;
-
-import javax.swing.text.StyledEditorKit.BoldAction;
-
-import com.sun.org.apache.regexp.internal.recompile;
-import com.sun.swing.internal.plaf.basic.resources.basic;
 
 public class MidGameAI {
 
 	public static void play(Hand hand, ScoreCard card) {
 
-		LinkedList<Integer> freeScores = card.getEmptyIndexes();
-		int[] tempScore = new int[15];
+		
 		boolean[] betOnThis = new boolean[15];
 
 		for (int i = 0; i < betOnThis.length; i++) {
@@ -40,13 +33,31 @@ public class MidGameAI {
 
 	public static void onPar(ScoreCard card, Hand hand) {
 
+		LinkedList<Integer> freeScores = card.getEmptyIndexes();
+		
 		if (AI.catchHand(hand, card)) {
 			return;
 		}
 
 		if (stegCheck(hand)) {
-			// TODO
+			stegeKolla(card, hand, freeScores);
+		
+			
 		}
+		
+		int betOn = uppCheck(card, hand);
+		
+		AIDiceRethrow.allOfAKind(hand, betOn);
+		if (AI.catchHand(hand, card)) {
+			return;
+		}
+		if (AI.fullHouse(card, hand)) {
+			return;
+		}
+
+		AIDiceRethrow.allOfAKind(hand, betOn);
+		
+		allOfAKindDefensive(card, hand, betOn);
 
 	}
 
@@ -83,7 +94,6 @@ public class MidGameAI {
 				betOn = e;
 			}
 		}
-		System.out.println("fvd");
 		return betOn;
 	}
 
@@ -140,7 +150,7 @@ public class MidGameAI {
 
 		AIDiceRethrow.allOfAKind(hand, keep);
 
-		allOfAKind(card, hand, keep);
+		allOfAKindAgressive(card, hand, keep);
 	}
 
 	public static void twoPairMid(ScoreCard card, Hand hand,
@@ -257,8 +267,65 @@ public class MidGameAI {
 		return highestCopy;
 
 	}
+	
+	
+	
+	public static void allOfAKindDefensive(ScoreCard card, Hand hand, int kept){
+		LinkedList<Integer> freeScores = card.getEmptyIndexes();
 
-	public static void allOfAKind(ScoreCard card, Hand hand, int kept) {
+		boolean checked = AI.catchHand(hand, card);
+		if (checked) {
+			return;
+		}
+		int[] evalScore = new int[15];
+		AI.evalScores(hand.getValueArray(), evalScore);
+
+		if (freeScores.contains(kept - 1)
+				&& evalScore[ScoreCard.threeOfAKind] != 0) {
+			card.scoreValues[kept - 1] = evalScore[kept - 1];
+			return;
+		}
+
+		if (evalScore[ScoreCard.fourOfAKind] != 0
+				&& freeScores.contains(ScoreCard.fourOfAKind)) {
+			card.scoreValues[ScoreCard.fourOfAKind] = evalScore[ScoreCard.fourOfAKind];
+			return;
+		}
+
+		if (AI.fullHouse(card, hand)) {
+			return;
+		}
+
+		if (freeScores.contains(kept - 1)) {
+			card.scoreValues[kept - 1] = evalScore[kept - 1];
+			return;
+		}
+
+		if (evalScore[ScoreCard.threeOfAKind] != 0
+				&& freeScores.contains(ScoreCard.threeOfAKind)) {
+			card.scoreValues[ScoreCard.threeOfAKind] = evalScore[ScoreCard.threeOfAKind];
+			return;
+		}
+
+		if (evalScore[ScoreCard.twoPair] != 0
+				&& freeScores.contains(ScoreCard.twoPair)) {
+			card.scoreValues[ScoreCard.twoPair] = evalScore[ScoreCard.twoPair];
+			return;
+		}
+
+		if (evalScore[ScoreCard.pair] != 0
+				&& freeScores.contains(ScoreCard.pair)) {
+			card.scoreValues[ScoreCard.pair] = evalScore[ScoreCard.pair];
+			return;
+		}
+
+
+		Nolla.nolla(card, hand);
+
+	}
+	
+
+	public static void allOfAKindAgressive(ScoreCard card, Hand hand, int kept) {
 		LinkedList<Integer> freeScores = card.getEmptyIndexes();
 
 		boolean checked = AI.catchHand(hand, card);
@@ -307,15 +374,7 @@ public class MidGameAI {
 			return;
 		}
 
-		if (card.onPar() == -1) {
-			Nolla.nollaUppe(card);
-		} else if (card.onPar() == 0) {
-			Nolla.nollaNere(card);
-		} else if (card.doWeHaveBonus()) {
-			Nolla.nollaUppe(card);
-		} else {
-			Nolla.nollaNere(card);
-		}
+		Nolla.nolla(card, hand);
 
 	}
 

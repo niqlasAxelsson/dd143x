@@ -15,7 +15,12 @@ public class Main {
 		int nrGames = Integer.parseInt(args[0]);
 		for (int gameCounter = 1 ; gameCounter <= nrGames ; gameCounter ++){
 			System.out.println("Gamecounter: "+ gameCounter);
-			Game.playGame();
+			try {
+				Game.playGame();
+			} catch (Exception e) {
+				gameCounter --;
+				e.printStackTrace();
+			}
 		}
 		printer.close();
 		

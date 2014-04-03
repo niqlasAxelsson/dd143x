@@ -84,7 +84,7 @@ public class AIDiceRethrow {
 	public static void largeStraight(Hand hand) {
 		boolean[] haveThisValue = { false, false, false, false, false, false };
 		for (Dice dice : hand.getDices()) {
-			if (haveThisValue[dice.getValue() - 1] || dice.value ==1) {
+			if (haveThisValue[dice.getValue() - 1] || dice.value == 1) {
 				dice.throwDice();
 			} else {
 				haveThisValue[dice.getValue() - 1] = true;
@@ -94,7 +94,6 @@ public class AIDiceRethrow {
 
 	}
 
-	
 	/**
 	 * rethrows every surplus copy of a dice value in order to get a straight
 	 * 
@@ -112,7 +111,7 @@ public class AIDiceRethrow {
 		hand.throwed();
 
 	}
-	
+
 	/**
 	 * Whatto do in case of full house on first or second throw. needs to know
 	 * the status of the scorecard to do correct decission
@@ -180,29 +179,55 @@ public class AIDiceRethrow {
 		hand.throwed();
 	}
 
-	
-	public static void twoPairToHouse(Hand hand){
+	public static void twoPairToHouse(Hand hand) {
 		int i = 0;
 		int j = 0;
-		
+
 		int[] countedDices = new int[6];
 		AI.countValues(hand.getValueArray(), countedDices);
-		
-		for (int c =0; c < countedDices.length; c++){
-			if (countedDices[c] == 2){
-				if (i == 0){
-					i = c+1;
-				}else {
-					j = c+1;
+
+		for (int c = 0; c < countedDices.length; c++) {
+			if (countedDices[c] == 2) {
+				if (i == 0) {
+					i = c + 1;
+				} else {
+					j = c + 1;
 				}
 			}
 		}
-		
-		for (Dice dice: hand.getDices()){
-			if (dice.value != i && dice.value != j ){
-				dice.throwDice();hand.throwed();
+
+		for (Dice dice : hand.getDices()) {
+			if (dice.value != i && dice.value != j) {
+				dice.throwDice();
+				hand.throwed();
 			}
 		}
 	}
-	
+
+	public static void getFullHouse(Hand hand) {
+		int[] countedDices = new int[6];
+		AI.countValues(hand.getValueArray(), countedDices);
+		int valueToKeep;
+		int trissScore = AI.checkTripleScore(hand.getValueArray());
+		if (trissScore != 0) {
+			valueToKeep = trissScore / 3;
+			int otherValue = 0;
+			for (int e = 5; e >= 2; e--) {
+				if (countedDices[e] == 1) {
+					otherValue = e + 1;
+					break;
+				}
+			}
+			for (Dice dice : hand.getDices()) {
+				if (dice.value != valueToKeep && dice.value != otherValue) {
+					dice.throwDice();
+				}
+				hand.throwed();
+				return;
+			}
+
+		}
+
+	}
+
 }

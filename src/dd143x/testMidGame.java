@@ -82,6 +82,22 @@ public class testMidGame {
 		assertEquals(6, betOn1);
 		
 		
+		int[] t3estThis = {2, 4, 5, 5, 5};
+		int fsefpkews = AI.fullHouseScore(t3estThis);
+		System.out.println(fsefpkews);
+		
+		card = new ScoreCard();
+		int[] newScores3 = {3,6,9,12,15,18,-1,111,-1,-1,111,111,111,-1,-1};
+		card.setScores(newScores3);
+		Printer.printArray(newScores3);
+		hand = new Hand();
+		MidGameAI.onPar(card, hand);
+		Printer.printArray(hand.getValueArray());
+		Printer.printArray(card.scoreValues);
+		
+		
+		
+		
 	}
 
 }

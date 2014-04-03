@@ -36,5 +36,27 @@ public class Nolla {
 		
 	}
 	
+	public static void nolla(ScoreCard card, Hand hand){
+		int chans = AI.chansScore(hand.getValueArray());
+		if (card.scoreValues[ScoreCard.chance] == -1 && chans > 19){
+			card.scoreValues[ScoreCard.chance] = chans;
+			return;
+		}
+		
+		if(card.getEmptyIndexes().size() == 1 && card.scoreValues[ScoreCard.chance] == -1){
+			card.scoreValues[ScoreCard.chance] = chans;
+			return;
+		}
+		
+		if (card.onPar() == -1) {
+			Nolla.nollaUppe(card);
+		} else if (card.onPar() == 0) {
+			Nolla.nollaNere(card);
+		} else if (card.doWeHaveBonus()) {
+			Nolla.nollaUppe(card);
+		} else {
+			Nolla.nollaNere(card);
+		}
+	}
 	
 }
