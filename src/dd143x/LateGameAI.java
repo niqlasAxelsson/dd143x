@@ -25,8 +25,8 @@ public class LateGameAI {
 				&& (freeScores.contains(ScoreCard.twoPair) || freeScores
 						.contains(ScoreCard.fullHouse))) {
 			System.out.println("tva par poang: " + evalScores[ScoreCard.twoPair]);
-			MidGameAI.twoPairMid(card, hand, freeScores, evalScores);
 			System.out.println("111");
+			MidGameAI.twoPairMid(card, hand, freeScores, evalScores);
 			return;
 
 		}

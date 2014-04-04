@@ -67,7 +67,7 @@ public class ScoreCard {
 	public int onPar() {
 		int parScore = 0;
 
-		for (int i = 0; i < sixes; i++) {
+		for (int i = 0; i <= sixes; i++) {
 			if (scoreValues[i] >= 0) {
 				parScore += scoreValues[i];
 			} else {
@@ -92,7 +92,7 @@ public class ScoreCard {
 	 */
 	public boolean possibleToGetPar() {
 		int parScore = 0;
-		for (int i = 0; i < sixes; i++) {
+		for (int i = 0; i <= sixes; i++) {
 			if (scoreValues[i] >= 0) {
 				parScore += scoreValues[i];
 			} else {
