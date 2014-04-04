@@ -15,7 +15,7 @@ public class Nolla {
 			ScoreCard.pair };
 
 	public static void nollaUppe(ScoreCard card) {
-		System.out.println("nollar uppe");
+		//System.out.println("nollar uppe");
 		LinkedList<Integer> freeSCores= card.getEmptyIndexes();
 		for (int i : nollaUppe){
 			if (freeSCores.contains(i)){
@@ -27,7 +27,7 @@ public class Nolla {
 	}
 
 	public static void nollaNere(ScoreCard card) {
-		System.out.println("nollar nere");
+		//System.out.println("nollar nere");
 		
 		LinkedList<Integer> freeSCores= card.getEmptyIndexes();
 		for (int i : nolla){
@@ -40,7 +40,7 @@ public class Nolla {
 	}
 	
 	public static void nolla(ScoreCard card, Hand hand){
-		System.out.println("nollar");
+		//System.out.println("nollar");
 		int chans = AI.chansScore(hand.getValueArray());
 		if (card.scoreValues[ScoreCard.chance] == -1 && chans > 19){
 			card.scoreValues[ScoreCard.chance] = chans;

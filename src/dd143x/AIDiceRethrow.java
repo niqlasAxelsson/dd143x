@@ -307,12 +307,12 @@ public class AIDiceRethrow {
 
 		for (Dice dice : hand.getDices()){
 			if(dice.value != keep1 && keep2 != dice.value){
-				System.out.println("kastar om: "+ dice.value);
+			//	System.out.println("kastar om: "+ dice.value);
 				dice.throwDice();
 			}
 			if (countedDices[dice.value -1] > 2){
 				countedDices[dice.value-1] --;
-				System.out.println("kastar om: "+ dice.value);
+				//System.out.println("kastar om: "+ dice.value);
 				dice.throwDice();
 			}
 			

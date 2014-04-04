@@ -10,11 +10,11 @@ public class Game {
 		Hand hand;
 		int roundCounter = 1;
 		while (!scoreCard.isCardFilled()){
-			System.out.println();
+			//System.out.println();
 			
 //			System.out.println("roundcounter: " + roundCounter);
 			hand = new Hand();
-			Printer.printArray(hand.getValueArray());
+		//	Printer.printArray(hand.getValueArray());
 			AI.ai(scoreCard, hand);
 //			
 			int freeSpaces = scoreCard.getEmptyIndexes().size();
@@ -26,11 +26,11 @@ public class Game {
 				Printer.printArray(scoreCard.scoreValues);
 				throw new Exception("To many Rounds");
 			}
-			System.out.println(roundCounter);
+			//System.out.println(roundCounter);
 			roundCounter ++;
 		}
-		System.out.println("Final score: " + scoreCard.finalScore());
-		System.out.println("Fick vi bonus: " + scoreCard.doWeHaveBonus());
+	//	System.out.println("Final score: " + scoreCard.finalScore());
+		//System.out.println("Fick vi bonus: " + scoreCard.doWeHaveBonus());
 		Main.printer.writeInt(scoreCard.finalScore());
 	
 	}

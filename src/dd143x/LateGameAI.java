@@ -24,8 +24,8 @@ public class LateGameAI {
 		if (evalScores[ScoreCard.twoPair] != 0
 				&& (freeScores.contains(ScoreCard.twoPair) || freeScores
 						.contains(ScoreCard.fullHouse))) {
-			System.out.println("tva par poang: " + evalScores[ScoreCard.twoPair]);
-			System.out.println("111");
+			//System.out.println("tva par poang: " + evalScores[ScoreCard.twoPair]);
+			//System.out.println("111");
 			MidGameAI.twoPairMid(card, hand, freeScores, evalScores);
 			return;
 
@@ -35,7 +35,7 @@ public class LateGameAI {
 
 		int stege = stegCheck(card, hand);
 		if (stege == 1) {
-			System.out.println("222");
+			//System.out.println("222");
 			AIDiceRethrow.smallStraight(hand);
 			AIDiceRethrow.smallStraight(hand);
 			if (AI.catchHand(hand, card)) {
@@ -44,7 +44,7 @@ public class LateGameAI {
 			wentForStraight = true;
 		}
 		if (stege == 2) {
-			System.out.println("333");
+			//System.out.println("333");
 			AIDiceRethrow.largeStraight(hand);
 			AIDiceRethrow.largeStraight(hand);
 			if (AI.catchHand(hand, card)) {
@@ -54,7 +54,7 @@ public class LateGameAI {
 		}
 
 		if (wentForStraight) {
-			System.out.println("4444");
+			//System.out.println("4444");
 			int[] evalScore = new int[15];
 			AI.evalScores(hand.getValueArray(), evalScore);
 			for (int l = evalScore.length - 1; l >= 0; l--) {
@@ -71,7 +71,7 @@ public class LateGameAI {
 		if ((card.getEmptyIndexes().size() == 1 && card.scoreValues[ScoreCard.smallStraight] == -1)
 				|| (card.getEmptyIndexes().size() == 2
 						&& card.scoreValues[ScoreCard.smallStraight] == -1 && card.scoreValues[ScoreCard.chance] == -1)) {
-			System.out.println("5555");
+			//System.out.println("5555");
 			AIDiceRethrow.smallStraight(hand);
 			AIDiceRethrow.smallStraight(hand);
 			if (AI.catchHand(hand, card)) {
@@ -85,7 +85,7 @@ public class LateGameAI {
 		if ((card.getEmptyIndexes().size() == 1 && card.scoreValues[ScoreCard.largeStraight] == -1)
 				|| (card.getEmptyIndexes().size() == 2
 						&& card.scoreValues[ScoreCard.largeStraight] == -1 && card.scoreValues[ScoreCard.chance] == -1)) {
-			System.out.println("6666");
+			//System.out.println("6666");
 			AIDiceRethrow.largeStraight(hand);
 			AIDiceRethrow.largeStraight(hand);
 			if (AI.catchHand(hand, card)) {
@@ -98,7 +98,7 @@ public class LateGameAI {
 		if ((card.getEmptyIndexes().size() == 2 && (card.scoreValues[ScoreCard.smallStraight] == -1 && card.scoreValues[ScoreCard.largeStraight] == -1))
 				|| (card.getEmptyIndexes().size() == 3 && (card.scoreValues[ScoreCard.smallStraight] == -1
 						&& card.scoreValues[ScoreCard.largeStraight] == -1 && card.scoreValues[ScoreCard.chance] == -1))) {
-			System.out.println("7777");
+			//System.out.println("7777");
 			AIDiceRethrow.largeStraight(hand);
 			if (AI.catchHand(hand, card)) {
 				return;
@@ -121,7 +121,7 @@ public class LateGameAI {
 		if ((freeScores.contains(ScoreCard.fullHouse) || freeScores
 				.contains(ScoreCard.twoPair))
 				&& AI.doublePairScore(hand.getValueArray()) != 0) {
-			System.out.println("888");
+			//System.out.println("888");
 			MidGameAI.twoPairMid(card, hand, freeScores, evalScores);
 			return;
 		}
@@ -129,7 +129,7 @@ public class LateGameAI {
 		if (freeScores.contains(ScoreCard.fullHouse)
 				&& AI.checkTripleScore(hand.getValueArray()) != 0) {
 		
-			System.out.println("99999");
+			//System.out.println("99999");
 			fullHouse(card, hand, freeScores, evalScores);
 			return;
 		}
@@ -139,7 +139,7 @@ public class LateGameAI {
 						&& freeScores.contains(ScoreCard.fullHouse) && freeScores
 							.contains(ScoreCard.chance))) {
 			
-			System.out.println("aaaaa");
+			//System.out.println("aaaaa");
 			fullHouse(card, hand, freeScores, evalScores);
 		}
 
@@ -147,7 +147,7 @@ public class LateGameAI {
 				|| (freeScores.size() == 2
 						&& freeScores.contains(ScoreCard.twoPair) && freeScores
 							.contains(ScoreCard.chance))) {
-			System.out.println("bbbb");
+			//System.out.println("bbbb");
 			AIDiceRethrow.getTwoPair(hand);
 			AIDiceRethrow.getTwoPair(hand);
 			
@@ -162,7 +162,7 @@ public class LateGameAI {
 		}
 		
 		if (freeScores.size() == 1 && freeScores.contains(ScoreCard.chance)){
-			System.out.println("cccc");
+			//System.out.println("cccc");
 			
 			goForChans(card, hand);
 			
@@ -172,7 +172,7 @@ public class LateGameAI {
 		
 		xOfAKind(card, hand);
 		
-	System.out.println("igenom late");
+	//System.out.println("igenom late");
 	}
 
 	

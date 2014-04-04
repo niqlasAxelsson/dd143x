@@ -111,7 +111,7 @@ public class ScoreCard {
 		for (int i = 0; i <= sixes; i++) {
 			if (scoreValues[i] >= 0) {
 				parScore += scoreValues[i];
-				System.out.println(parScore);
+				//System.out.println(parScore);
 			}
 		}
 

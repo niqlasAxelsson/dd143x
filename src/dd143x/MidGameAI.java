@@ -80,7 +80,7 @@ public class MidGameAI {
 				if (countedDices[e] > num && !checkedAllready.contains(e +1)) {
 					num = countedDices[e];
 					betOn = e +1;
-					System.out.println(betOn);
+					////System.out.println(betOn);
 				}
 			}
 
@@ -166,7 +166,7 @@ public class MidGameAI {
 
 			// fångar kåk direkt om vi ligger under par, kan inte få par
 			if (AI.fullHouse(card, hand)) {
-				System.out.println("aaaa");
+				////System.out.println("aaaa");
 				return;
 			}
 
@@ -176,13 +176,13 @@ public class MidGameAI {
 
 			// fångar kåk direkt om vi ligger under par, kan inte få par
 			if (AI.fullHouse(card, hand)) {
-				System.out.println("bbbb");
+				////System.out.println("bbbb");
 				return;
 			}
 
 			// vi har tva par och den platsen ar ledig
 			if (freeScores.contains(ScoreCard.twoPair)) {
-				System.out.println("ccc");
+				////System.out.println("ccc");
 				card.scoreValues[ScoreCard.twoPair] = evalScores[ScoreCard.twoPair];
 				return;
 			}
@@ -190,7 +190,7 @@ public class MidGameAI {
 			// vi har kak men kak ar upptagen.dvs fyller triss
 			if (evalScores[ScoreCard.threeOfAKind] != 0
 					&& freeScores.contains(ScoreCard.threeOfAKind)) {
-				System.out.println("dddd");
+				////System.out.println("dddd");
 				card.scoreValues[ScoreCard.threeOfAKind] = evalScores[ScoreCard.threeOfAKind];
 				return;
 			}
@@ -198,13 +198,13 @@ public class MidGameAI {
 
 			if (evalScores[ScoreCard.pair] >= 8
 					&& freeScores.contains(ScoreCard.pair)) {
-				System.out.println("eeeee");
+				////System.out.println("eeeee");
 				card.scoreValues[ScoreCard.pair] = evalScores[ScoreCard.pair];
 				return;
 			}
 
 			for (int d = 0; d < 6; d++) {
-				System.out.println("ffffff");
+				////System.out.println("ffffff");
 				if (evalScores[d] != 0 && freeScores.contains(d)) {
 					card.scoreValues[d] = evalScores[d];
 					return;
@@ -212,7 +212,7 @@ public class MidGameAI {
 			}
 
 			if (freeScores.contains(ScoreCard.pair)) {
-				System.out.println("gggggg");
+				////System.out.println("gggggg");
 				card.scoreValues[ScoreCard.pair] = evalScores[ScoreCard.pair];
 				return;
 			}
@@ -220,7 +220,7 @@ public class MidGameAI {
 		
 
 			// nolla
-			System.out.println("nolla");
+			////System.out.println("nolla");
 			Nolla.nolla(card, hand);
 			
 			return;
@@ -397,11 +397,11 @@ public class MidGameAI {
 			return;
 		}
 
-		//Printer.printArraybOOL(stegarKollade);
+		////Printer.printArraybOOL(stegarKollade);
 
 		// vvi kan fa liten stege och den ar ledig
 		if (freeScores.contains(ScoreCard.smallStraight)) {
-			////System.out.println("small straight free");
+			////////System.out.println("small straight free");
 			if (stegarKollade[0] || stegarKollade[1]) {
 				AIDiceRethrow.smallStraight(hand);
 				boolean caught = AI.catchHand(hand, card);

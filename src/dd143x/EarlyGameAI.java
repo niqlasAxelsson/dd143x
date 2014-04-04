@@ -41,10 +41,10 @@ public class EarlyGameAI {
 				return;
 			}
 
-			//System.out.println("nytt test");
-			//System.out.println(valueToKeep);
-			//System.out.println((freeScores.contains(ScoreCard.fourOfAKind)));
-			//System.out.println(!freeScores.contains(valueToKeep -1));
+			////System.out.println("nytt test");
+			////System.out.println(valueToKeep);
+			////System.out.println((freeScores.contains(ScoreCard.fourOfAKind)));
+			////System.out.println(!freeScores.contains(valueToKeep -1));
 			
 			int[] howManyDoWeHave = new int[AI.diceMaxValue];
 			AI.countValues(hand.getValueArray(), howManyDoWeHave);
@@ -90,7 +90,7 @@ public class EarlyGameAI {
 			// fill in the one that should now have 3, 4 or 5 of a kind
 			card.scoreValues[valueToKeep - 1] = score;
 			
-			System.out.println("igenom early");
+			//System.out.println("igenom early");
 
 	}
 
@@ -120,7 +120,7 @@ public class EarlyGameAI {
 		
 		
 		if (freeScores.contains(ScoreCard.fourOfAKind)){
-		//	//System.out.println("vg;wieurkv-=wsdgk;iusvhk;svg'vsdfhk");
+		//	////System.out.println("vg;wieurkv-=wsdgk;iusvhk;svg'vsdfhk");
 			for (int h = countedDices.length-1; h > 3; h --){
 				if (countedDices[h] >= 4){
 					return h+1;

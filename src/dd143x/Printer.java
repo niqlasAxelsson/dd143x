@@ -19,6 +19,9 @@ public class Printer {
 		private FileWriter outStream;
 		private BufferedWriter writer;
 		private String dateTime;
+		private int sum =0;
+		private int best = 0;
+		private int worst = 300;
 		
 		public Printer(){
 			dateTime = new SimpleDateFormat("yyyyMMdd_HHmm").format(Calendar.getInstance().getTime());
@@ -41,6 +44,9 @@ public class Printer {
 		}
 		
 		public void close(){
+			System.out.println("medelvärde: "  + sum/1000 + " 1 000 körningar");
+			System.out.println("best: " + best);
+			System.out.println("worst: " + worst );
 			try {
 				writer.write("\n");
 			} catch (IOException e1) {
@@ -57,6 +63,13 @@ public class Printer {
 		
 		public void writeInt(int input){
 			try {
+				sum += input;
+				if (input > best){
+					best = input;
+				}
+				if (input < worst){
+					worst = input;
+				}
 				writer.write(input + ";\n");
 			} catch (IOException e) {
 				e.printStackTrace();
