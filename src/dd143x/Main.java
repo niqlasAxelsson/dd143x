@@ -12,6 +12,7 @@ public class Main {
 		if (args.length == 0 ){
 			throw new IllegalArgumentException("No Input");
 		}
+		int errors = 0;
 		int nrGames = Integer.parseInt(args[0]);
 		for (int gameCounter = 1 ; gameCounter <= nrGames ; gameCounter ++){
 		//	System.out.println("Gamecounter: "+ gameCounter);
@@ -19,9 +20,10 @@ public class Main {
 				Game.playGame();
 			} catch (Exception e) {
 				gameCounter --;
-				e.printStackTrace();
+				errors ++;
 			}
 		}
+		System.out.println("errors: " + errors);
 		printer.close();
 		
 		

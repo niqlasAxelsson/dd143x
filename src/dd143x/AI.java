@@ -14,7 +14,7 @@ public class AI {
 	// final static private float[] weights1 = [];
 
 	final static public int earlyGame = 5;
-	final static public int midGame = 10;
+	final static public int midGame = 15;
 
 	public static void ai(ScoreCard card, Hand hand) {
 

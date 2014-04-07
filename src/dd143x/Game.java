@@ -23,7 +23,7 @@ public class Game {
 //				throw new Exception("spelkortet är fel ifyllt");
 //			}
 			if (roundCounter > 16){
-				Printer.printArray(scoreCard.scoreValues);
+				//Printer.printArray(scoreCard.scoreValues);
 				throw new Exception("To many Rounds");
 			}
 			//System.out.println(roundCounter);
